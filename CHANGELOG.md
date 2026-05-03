@@ -7,10 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.3] — 2026-05-03
+
+### Fixed
+- **UI: tab labels were clipped** at the right edge of the notebook with 6
+  tabs (after the Settings tab landed in v0.3.1) when running in long-label
+  languages (French / Italian / German). Window width bumped from 660 to
+  880 (min size 820) so all 6 tab labels fit in every locale.
+- **CI annotation: `actions/github-script` Node 20 deprecation** was raised
+  even with `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` because the var only
+  forces *runtime*, not the manifest-level annotation. Replaced
+  `codecov/codecov-action@v5` (which transitively pulls
+  `actions/github-script`) with a direct call to the Codecov CLI binary
+  via `curl`. No JS action, no transitive dep, no annotation.
+
+### Known issues (upstream, accepted)
+- macOS runner still raises `WARNING: Cache entry deserialization failed,
+  entry ignored`. The warning comes from `actions/setup-python@v6`'s
+  *internal* manifest cache (not the pip cache we already disabled), which
+  has no public toggle. Job remains green; the warning is cosmetic. Will
+  self-resolve when `setup-python` ships a fix.
+
 ## [0.3.2] — 2026-05-03
 
-First version actually published to PyPI after the 0.3.1 commit (0.3.1
-was committed to main but never tagged).
+> Committed to main but never tagged / published to PyPI. Content shipped
+> via 0.3.3.
 
 ### Changed
 - **CI: `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true`** at workflow level —

@@ -7,8 +7,11 @@ place. Importing from this module is preferred over inlining numeric values.
 from __future__ import annotations
 
 # ---- Window ----
-WINDOW_GEOMETRY = "660x460"
-WINDOW_MIN_SIZE = (620, 400)
+# 880px accommodates 6 tab labels in the longest-translation languages
+# (French, Italian, German). At 660px the last tab(s) were clipped because
+# adding the Settings tab in v0.3.1 pushed the row over the previous budget.
+WINDOW_GEOMETRY = "880x460"
+WINDOW_MIN_SIZE = (820, 400)
 
 # ---- Generic spacing ----
 TAB_PADDING = 20  # ttk.Frame padding inside each tab

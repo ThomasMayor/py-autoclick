@@ -66,16 +66,21 @@ jobs:
         if: runner.os == 'Linux'
         run: xvfb-run --auto-servernum pytest -v
 
-      # Coverage upload: gate on Codecov being available rather than masking
-      # the step's own failures. ``fail_ci_if_error: false`` lets a Codecov
-      # outage pass quietly; we removed the ``continue-on-error: true`` that
-      # was double-bypassing real workflow misconfigurations.
+      # Coverage upload via the Codecov CLI directly — avoids the
+      # `codecov-action` JS wrapper and its transitive `actions/github-script`
+      # dependency, which still targets Node 20 even with
+      # FORCE_JAVASCRIPT_ACTIONS_TO_NODE24 (the env var forces it to RUN on
+      # Node 24 but GitHub still annotates the manifest mismatch).
+      # The CLI is a static binary; nothing JS, nothing transitive.
+      # || true: a Codecov outage must not red the build.
       - name: Upload coverage to Codecov
         if: runner.os == 'Linux' && matrix.python-version == '3.12' && hashFiles('coverage.xml') != ''
-        uses: codecov/codecov-action@v5
-        with:
-          files: ./coverage.xml
-          fail_ci_if_error: false
+        run: |
+          curl -fsSL https://cli.codecov.io/latest/linux/codecov -o /tmp/codecov
+          chmod +x /tmp/codecov
+          /tmp/codecov upload-coverage \
+            --file coverage.xml \
+            --slug ThomasMayor/py-autoclick || true
 
   lint:
     name: Lint (ruff + mypy)
