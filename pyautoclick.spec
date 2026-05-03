@@ -88,7 +88,7 @@ if sys.platform == "darwin":
         icon=icon_arg,
         bundle_identifier="com.thomasmayor.pyautoclick",
         info_plist={
-            "CFBundleShortVersionString": "0.3.4",
+            "CFBundleShortVersionString": "0.3.5",
             "NSHighResolutionCapable": "True",
             "NSAccessibilityUsageDescription": (
                 "PyAutoClick needs Accessibility permission to capture global "

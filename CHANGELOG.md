@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.5] — 2026-05-03
+
+### Fixed
+- **Release workflow: PyInstaller failed on Windows + macOS for v0.3.4.**
+  PyInstaller refuses a `.png` as the EXE/BUNDLE icon on these platforms
+  (it wants `.ico` / `.icns`). Without Pillow installed, it raises
+  `ValueError` instead of falling back to a default icon. Added `pillow`
+  to the `release.yml` install step — Pillow auto-converts the PNG at
+  build time so the same single icon source works for all three OSes.
+- **Release workflow: Linux sanity-check step was syntactically broken.**
+  The bash `\` line-continuation inside a YAML scalar didn't behave as
+  intended, and `code=$?` was only set when the binary crashed (a clean
+  `exit 0` left `$code` empty, breaking the comparison). Rewritten as a
+  proper multi-line `bash` block with explicit `set +e` / `set -e`.
+
+### Note
+- v0.3.4 is on PyPI (publish.yml succeeded) but its GitHub Release was
+  never created (release.yml failed). v0.3.5 is the first release with
+  both PyPI artifacts and standalone binaries successfully attached.
+
 ## [0.3.4] — 2026-05-03
 
 ### Added

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pyautoclick"
-version = "0.3.4"
+version = "0.3.5"
 description = "Hold-to-click and auto-click with global hotkeys, multi-language UI."
 readme = "README.md"
 license = { file = "LICENSE" }
