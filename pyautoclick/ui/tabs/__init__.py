@@ -4,8 +4,17 @@ from pyautoclick.ui.tabs.auto import AutoTab
 from pyautoclick.ui.tabs.hold import HoldTab
 from pyautoclick.ui.tabs.hotkeys import HotkeysTab
 from pyautoclick.ui.tabs.positions import PositionsTab
+from pyautoclick.ui.tabs.settings import SettingsTab
 from pyautoclick.ui.tabs.test import TestTab
 
-ALL_TABS = [HoldTab, AutoTab, PositionsTab, HotkeysTab, TestTab]
+ALL_TABS = [HoldTab, AutoTab, PositionsTab, HotkeysTab, SettingsTab, TestTab]
 
-__all__ = ["ALL_TABS", "AutoTab", "HoldTab", "HotkeysTab", "PositionsTab", "TestTab"]
+__all__ = [
+    "ALL_TABS",
+    "AutoTab",
+    "HoldTab",
+    "HotkeysTab",
+    "PositionsTab",
+    "SettingsTab",
+    "TestTab",
+]

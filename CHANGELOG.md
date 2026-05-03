@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] — 2026-05-03
+
+### Added
+- **Settings tab** — new dedicated tab grouping app-wide preferences
+  (language, system notifications toggle). Designed to grow as new
+  preferences are added.
+- New translation key `tab_settings` in all 11 locales.
+- Fixed: `pyautoclick.__version__` was stuck at `0.2.0` while the package
+  metadata read `0.3.0`; both now read `0.3.1` consistently.
+
+### Changed
+- **Shortcuts tab** is now focused on its single responsibility: the three
+  global hotkeys + the platform caveat banner + the invalid-combo error
+  label. The notification toggle and the language picker moved to the new
+  Settings tab.
+- **CI: GitHub Actions bumped** to Node 24-compatible versions:
+  `actions/checkout@v5`, `actions/setup-python@v6`, `codecov/codecov-action@v5`.
+  Node 20 is being removed from runners on 2026-09-16.
+- **CI: Codecov upload no longer double-bypassed.** Removed the redundant
+  `continue-on-error: true` (kept `fail_ci_if_error: false` to tolerate
+  Codecov outages, gated the step on `coverage.xml` existing). A real
+  workflow misconfiguration is no longer silently swallowed.
+
 ## [0.3.0] — 2026-05-03
 
 ### Added

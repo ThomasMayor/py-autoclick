@@ -6,10 +6,8 @@
     "machine_translated": true,
     "_note": "Hebrew has 4 plural forms; this app uses simplified one/other."
   },
-
   "app_title": "Auto-clicker",
   "instance_already_running": "מופע של Auto-clicker כבר פועל.",
-
   "status_waiting": "ממתין",
   "status_clicking": "מבצע קליקים",
   "status_auto": "מצב אוטומטי פעיל",
@@ -18,13 +16,12 @@
   "label_clicks": "{n, plural, one {קליק: {n_fmt}} other {קליקים: {n_fmt}}}",
   "label_hotkeys": "קיצורים: {x}",
   "theme_tip": "החלפה בין ערכת נושא בהירה וכהה",
-
   "tab_hold": "מצב החזקה",
   "tab_auto": "מצב אוטומטי",
   "tab_positions": "מיקומים",
   "tab_hotkeys": "קיצורים",
+  "tab_settings": "הגדרות",
   "tab_test": "בדיקה",
-
   "hold_enable": "הפעלת מצב החזקה",
   "hold_enable_tip": "כאשר מושבת, כפתור הטריגר אינו מפעיל יותר קליקים.",
   "label_trigger": "טריגר:",
@@ -35,7 +32,6 @@
   "cps_tip": "קצב יעד. המחוון מכסה 1-50, השדה עד 200.",
   "label_jitter": "וריאציה (± אלפיות שנייה):",
   "hold_jitter_tip": "וריאציה אקראית (±) המוחלת על המרווח בין קליקים.\n0 = קצב קבוע לחלוטין.",
-
   "auto_enable": "הפעלת מצב אוטומטי",
   "auto_enable_tip": "מתחיל קליק אוטומטי. מאפס את מונה ההפעלה.",
   "label_interval": "מרווח (אלפיות שנייה):",
@@ -47,7 +43,6 @@
   "limit_tip": "עוצר את המצב האוטומטי לאחר N קליקים. 0 = ללא הגבלה.",
   "use_positions": "מעבר בין מיקומים (כרטיסיית מיקומים)",
   "use_positions_tip": "אם מופעל, הסמן מועבר לכל מיקום לפני הקליק.",
-
   "positions_intro": "רשימת המיקומים שהמצב האוטומטי עובר ביניהם (אם מופעל).",
   "btn_add": "הוספה",
   "btn_add_tip": "תופס את מיקום הסמן הנוכחי.",
@@ -55,7 +50,6 @@
   "btn_add_delayed_tip": "נותן 3 שניות למקם את הסמן ואז תופס.",
   "btn_remove": "הסרה",
   "btn_clear": "ניקוי",
-
   "hk_toggle": "החלפת מצב אוטומטי:",
   "hk_toggle_tip": "מחליף הפעלה/כיבוי של המצב האוטומטי. עובד ללא פוקוס.",
   "hk_momentary": "החזקת מצב אוטומטי:",
@@ -70,7 +64,6 @@
   "caveat_unknown_display": "שרת תצוגה לא ידוע. ייתכן שהקיצורים הגלובליים לא יעבדו.",
   "label_language": "שפה:",
   "language_tip": "משנה את שפת הממשק. הממשק נבנה מחדש בעת השינוי.",
-
   "test_intro": "לחץ בכל מקום במסך כדי לזהות את הכפתור.\nשימושי לזיהוי כפתורי הצד 8 / 9 של עכבר.",
   "test_box_title": "אירוע העכבר האחרון",
   "label_button": "כפתור:",
@@ -79,18 +72,15 @@
   "label_curpos": "מיקום נוכחי:",
   "state_pressed": "לחוץ",
   "state_released": "שוחרר",
-
   "btn_capture": "תפיסה",
   "capture_title": "תפיסת קיצור",
   "capture_prompt": "לחץ על הצירוף הרצוי\n(Esc לביטול)",
   "capture_inprogress": "בתהליך: {x}+…",
   "capture_unknown": "מקש לא מזוהה: {x}",
-
   "notif_auto_started": "המצב האוטומטי הופעל",
   "notif_auto_stopped": "המצב האוטומטי נעצר",
   "notif_panic": "עצירת חירום",
   "notif_limit": "{n, plural, one {הגעת למגבלה ({n_fmt} קליק)} other {הגעת למגבלה ({n_fmt} קליקים)}}",
-
   "trigger_button8": "כפתור צד אחורי (8)",
   "trigger_button9": "כפתור צד קדמי (9)",
   "trigger_middle": "כפתור אמצעי",

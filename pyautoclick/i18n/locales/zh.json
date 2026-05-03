@@ -5,10 +5,8 @@
     "machine_translated": true,
     "_note": "Simplified Chinese; no plural distinction needed."
   },
-
   "app_title": "自动点击器",
   "instance_already_running": "已有一个自动点击器实例在运行。",
-
   "status_waiting": "待机",
   "status_clicking": "点击中",
   "status_auto": "自动模式运行中",
@@ -17,13 +15,12 @@
   "label_clicks": "{n, plural, one {点击次数: {n_fmt}} other {点击次数: {n_fmt}}}",
   "label_hotkeys": "快捷键: {x}",
   "theme_tip": "在深色和浅色主题之间切换",
-
   "tab_hold": "按住模式",
   "tab_auto": "自动模式",
   "tab_positions": "位置",
   "tab_hotkeys": "快捷键",
+  "tab_settings": "设置",
   "tab_test": "测试",
-
   "hold_enable": "启用按住模式",
   "hold_enable_tip": "禁用后,触发按钮不再产生点击。",
   "label_trigger": "触发按钮:",
@@ -34,7 +31,6 @@
   "cps_tip": "目标频率。滑块覆盖 1-50,输入框最高 200。",
   "label_jitter": "抖动 (± 毫秒):",
   "hold_jitter_tip": "应用于点击间隔的随机抖动 (±)。\n0 = 完全规律。",
-
   "auto_enable": "启用自动模式",
   "auto_enable_tip": "启动自动点击。重置会话计数器。",
   "label_interval": "间隔 (毫秒):",
@@ -46,7 +42,6 @@
   "limit_tip": "达到 N 次点击后停止自动模式。0 = 无限制。",
   "use_positions": "在多个位置之间循环 (位置选项卡)",
   "use_positions_tip": "启用后,光标会在每次点击前移动到下一个位置。",
-
   "positions_intro": "自动模式循环经过的位置列表 (启用时)。",
   "btn_add": "添加",
   "btn_add_tip": "捕获当前光标位置。",
@@ -54,7 +49,6 @@
   "btn_add_delayed_tip": "给您 3 秒移动光标,然后捕获。",
   "btn_remove": "删除",
   "btn_clear": "清空",
-
   "hk_toggle": "切换自动模式:",
   "hk_toggle_tip": "切换自动模式开关。无需焦点也能工作。",
   "hk_momentary": "按住自动模式:",
@@ -69,7 +63,6 @@
   "caveat_unknown_display": "未知的显示服务器。全局快捷键可能无法工作。",
   "label_language": "语言:",
   "language_tip": "更改界面语言。切换时 UI 会重建。",
-
   "test_intro": "在屏幕任何位置点击以识别按钮。\n用于识别鼠标的侧键 8 / 9。",
   "test_box_title": "最近的鼠标事件",
   "label_button": "按钮:",
@@ -78,18 +71,15 @@
   "label_curpos": "当前位置:",
   "state_pressed": "按下",
   "state_released": "释放",
-
   "btn_capture": "捕获",
   "capture_title": "捕获快捷键",
   "capture_prompt": "按下所需的组合键\n(Esc 取消)",
   "capture_inprogress": "进行中: {x}+…",
   "capture_unknown": "无法识别的按键: {x}",
-
   "notif_auto_started": "自动模式已启动",
   "notif_auto_stopped": "自动模式已停止",
   "notif_panic": "紧急停止",
   "notif_limit": "{n, plural, one {已达到上限 ({n_fmt} 次点击)} other {已达到上限 ({n_fmt} 次点击)}}",
-
   "trigger_button8": "侧键 后退 (8)",
   "trigger_button9": "侧键 前进 (9)",
   "trigger_middle": "中键",

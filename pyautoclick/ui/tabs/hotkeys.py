@@ -1,11 +1,15 @@
-"""Hotkeys tab: 3 hotkeys + notification toggle + language selector."""
+"""Hotkeys tab: 3 global hotkeys + invalid-combo error label.
+
+The notification toggle and the language selector used to live here too;
+they were moved to the dedicated Settings tab in v0.3.1 so this tab
+remains focused on its single responsibility.
+"""
 
 from __future__ import annotations
 
 import tkinter as tk
 from tkinter import ttk
 
-from pyautoclick.i18n import LANG_LABELS, LANGUAGES
 from pyautoclick.ui.colors import ERROR_RED, WARNING_AMBER
 from pyautoclick.ui.tabs.base import BaseTab
 from pyautoclick.ui.widgets.hotkey_entry import HotkeyEntry
@@ -53,37 +57,11 @@ class HotkeysTab(BaseTab):
         hk_row(row_off + 1, "hk_momentary", "hotkey_auto_momentary", "hk_momentary_tip")
         hk_row(row_off + 2, "hk_panic", "hotkey_panic", "hk_panic_tip")
 
-        ttk.Separator(self).grid(row=row_off + 3, column=0, columnspan=2, sticky="ew", pady=16)
-
-        # Notifications
-        self.notify_var = tk.BooleanVar(value=self.settings.notify_enabled)
-        cbn = ttk.Checkbutton(
-            self, text=t("notify_enable"), variable=self.notify_var, command=self._on_notify_change
-        )
-        cbn.grid(row=row_off + 4, column=0, columnspan=2, sticky=SL, pady=(0, 8))
-        Tooltip(cbn, t("notify_tip"))
-
-        # Language selector
-        ttk.Label(self, text=t("label_language"), anchor=self.anchor_label).grid(
-            row=row_off + 5,
-            column=L,
-            sticky=SL,
-            pady=8,
-        )
-        lang_labels = [LANG_LABELS[c] for c in LANGUAGES]
-        self.lang_var = tk.StringVar(value=LANG_LABELS[self.settings.language])
-        cb_lang = ttk.Combobox(
-            self, textvariable=self.lang_var, values=lang_labels, state="readonly"
-        )
-        cb_lang.grid(row=row_off + 5, column=C, sticky="ew", pady=8)
-        cb_lang.bind("<<ComboboxSelected>>", self._on_lang_change)
-        Tooltip(cb_lang, t("language_tip"))
-
         # Invalid combos error label
         self.error_var = tk.StringVar(value="")
         ttk.Label(
             self, textvariable=self.error_var, anchor=self.anchor_label, foreground=ERROR_RED
-        ).grid(row=row_off + 6, column=0, columnspan=2, sticky=SL, pady=(8, 0))
+        ).grid(row=row_off + 3, column=0, columnspan=2, sticky=SL, pady=(8, 0))
 
     def _build_caveat_banner(self) -> int:
         """If the platform has known limitations, render an amber warning.
@@ -125,16 +103,6 @@ class HotkeysTab(BaseTab):
         setattr(self.settings, key, combo)
         self.commit()
         self.ctx.refresh_hotkeys()
-
-    def _on_notify_change(self) -> None:
-        self.settings.notify_enabled = bool(self.notify_var.get())
-        self.commit()
-
-    def _on_lang_change(self, _e) -> None:
-        for code, lbl in LANG_LABELS.items():
-            if lbl == self.lang_var.get():
-                self.ctx.change_language(code)
-                return
 
     # Called by App after (re)configuring the HotkeyManager
     def set_error(self, text: str) -> None:

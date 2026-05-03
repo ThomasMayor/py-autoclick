@@ -4,10 +4,8 @@
     "name": "Español",
     "machine_translated": true
   },
-
   "app_title": "Auto-clicker",
   "instance_already_running": "Ya hay una instancia de Auto-clicker en ejecución.",
-
   "status_waiting": "En espera",
   "status_clicking": "Haciendo clic",
   "status_auto": "Modo automático en ejecución",
@@ -16,13 +14,12 @@
   "label_clicks": "{n, plural, one {Clic: {n_fmt}} other {Clics: {n_fmt}}}",
   "label_hotkeys": "Atajos: {x}",
   "theme_tip": "Cambiar entre tema claro y oscuro",
-
   "tab_hold": "Modo mantenido",
   "tab_auto": "Modo automático",
   "tab_positions": "Posiciones",
   "tab_hotkeys": "Atajos",
+  "tab_settings": "Ajustes",
   "tab_test": "Prueba",
-
   "hold_enable": "Activar modo mantenido",
   "hold_enable_tip": "Si está desactivado, el botón disparador deja de generar clics.",
   "label_trigger": "Disparador:",
@@ -33,7 +30,6 @@
   "cps_tip": "Frecuencia objetivo. El deslizador cubre 1-50, el campo hasta 200.",
   "label_jitter": "Variación (± ms):",
   "hold_jitter_tip": "Variación aleatoria (±) aplicada al intervalo entre clics.\n0 = frecuencia perfectamente regular.",
-
   "auto_enable": "Activar modo automático",
   "auto_enable_tip": "Inicia el clic automático. Reinicia el contador de sesión.",
   "label_interval": "Intervalo (ms):",
@@ -45,7 +41,6 @@
   "limit_tip": "Detiene el modo automático tras N clics. 0 = ilimitado.",
   "use_positions": "Recorrer posiciones (pestaña Posiciones)",
   "use_positions_tip": "Si está activado, el cursor se mueve a cada posición antes de hacer clic.",
-
   "positions_intro": "Lista de posiciones recorridas en modo automático (si está activo).",
   "btn_add": "Añadir",
   "btn_add_tip": "Captura la posición actual del cursor.",
@@ -53,7 +48,6 @@
   "btn_add_delayed_tip": "Otorga 3 segundos para colocar el cursor, luego captura.",
   "btn_remove": "Eliminar",
   "btn_clear": "Vaciar",
-
   "hk_toggle": "Alternar modo automático:",
   "hk_toggle_tip": "Activa/desactiva el modo automático. Funciona sin foco.",
   "hk_momentary": "Mantener modo automático:",
@@ -68,7 +62,6 @@
   "caveat_unknown_display": "Servidor gráfico desconocido. Es posible que los atajos globales no funcionen.",
   "label_language": "Idioma:",
   "language_tip": "Cambia el idioma de la interfaz. La UI se reconstruye al cambiar.",
-
   "test_intro": "Haz clic en cualquier punto de la pantalla para identificar el botón.\nÚtil para identificar los botones laterales 8 / 9 de un ratón.",
   "test_box_title": "Último evento del ratón",
   "label_button": "Botón:",
@@ -77,18 +70,15 @@
   "label_curpos": "Posición actual:",
   "state_pressed": "pulsado",
   "state_released": "soltado",
-
   "btn_capture": "Capturar",
   "capture_title": "Capturar atajo",
   "capture_prompt": "Pulsa la combinación deseada\n(Esc para cancelar)",
   "capture_inprogress": "En curso: {x}+…",
   "capture_unknown": "Tecla no reconocida: {x}",
-
   "notif_auto_started": "Modo automático iniciado",
   "notif_auto_stopped": "Modo automático detenido",
   "notif_panic": "PARADA DE EMERGENCIA",
   "notif_limit": "{n, plural, one {Límite alcanzado ({n_fmt} clic)} other {Límite alcanzado ({n_fmt} clics)}}",
-
   "trigger_button8": "Botón lateral atrás (8)",
   "trigger_button9": "Botón lateral adelante (9)",
   "trigger_middle": "Botón central",

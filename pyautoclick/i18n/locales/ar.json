@@ -6,10 +6,8 @@
     "machine_translated": true,
     "_note": "Arabic has 6 plural forms; this app uses simplified one/other."
   },
-
   "app_title": "نقّار آلي",
   "instance_already_running": "يوجد بالفعل نسخة من النقّار الآلي قيد التشغيل.",
-
   "status_waiting": "في الانتظار",
   "status_clicking": "النقر جارٍ",
   "status_auto": "الوضع التلقائي قيد التشغيل",
@@ -18,13 +16,12 @@
   "label_clicks": "{n, plural, one {نقرة: {n_fmt}} other {النقرات: {n_fmt}}}",
   "label_hotkeys": "الاختصارات: {x}",
   "theme_tip": "التبديل بين السمة الداكنة والفاتحة",
-
   "tab_hold": "وضع الاستمرار",
   "tab_auto": "الوضع التلقائي",
   "tab_positions": "المواضع",
   "tab_hotkeys": "الاختصارات",
+  "tab_settings": "الإعدادات",
   "tab_test": "اختبار",
-
   "hold_enable": "تفعيل وضع الاستمرار",
   "hold_enable_tip": "عند التعطيل، لن يطلق زر التشغيل أي نقرات.",
   "label_trigger": "زر التشغيل:",
@@ -35,7 +32,6 @@
   "cps_tip": "المعدل المستهدف. الشريط من 1 إلى 50، الحقل حتى 200.",
   "label_jitter": "التغيّر (± مللي ثانية):",
   "hold_jitter_tip": "تغيّر عشوائي (±) يطبَّق على الفاصل بين النقرات.\n0 = معدل منتظم تماماً.",
-
   "auto_enable": "تفعيل الوضع التلقائي",
   "auto_enable_tip": "يبدأ النقر التلقائي. يعيد تعيين عدّاد الجلسة.",
   "label_interval": "الفاصل (مللي ثانية):",
@@ -47,7 +43,6 @@
   "limit_tip": "يوقف الوضع التلقائي بعد N نقرة. 0 = بلا حد.",
   "use_positions": "التنقل بين المواضع (تبويب المواضع)",
   "use_positions_tip": "إذا فُعِّل، يُنقل المؤشر إلى كل موضع قبل النقر.",
-
   "positions_intro": "قائمة المواضع التي يمر بها الوضع التلقائي (عند التفعيل).",
   "btn_add": "إضافة",
   "btn_add_tip": "يلتقط الموضع الحالي للمؤشر.",
@@ -55,7 +50,6 @@
   "btn_add_delayed_tip": "يمنحك ٣ ثوانٍ لوضع المؤشر، ثم يلتقط.",
   "btn_remove": "حذف",
   "btn_clear": "تفريغ",
-
   "hk_toggle": "تبديل الوضع التلقائي:",
   "hk_toggle_tip": "يبدّل تفعيل الوضع التلقائي. يعمل بدون التركيز على النافذة.",
   "hk_momentary": "الاستمرار في الوضع التلقائي:",
@@ -70,7 +64,6 @@
   "caveat_unknown_display": "خادم العرض غير معروف. قد لا تعمل الاختصارات العامة.",
   "label_language": "اللغة:",
   "language_tip": "يغيّر لغة الواجهة. تُعاد بناء الواجهة عند التغيير.",
-
   "test_intro": "انقر في أي مكان من الشاشة لتحديد الزر.\nمفيد لتحديد الأزرار الجانبية ٨ / ٩ للفأرة.",
   "test_box_title": "آخر حدث للفأرة",
   "label_button": "الزر:",
@@ -79,18 +72,15 @@
   "label_curpos": "الموضع الحالي:",
   "state_pressed": "مضغوط",
   "state_released": "محرَّر",
-
   "btn_capture": "التقاط",
   "capture_title": "التقاط اختصار",
   "capture_prompt": "اضغط التركيبة المرغوبة\n(Esc للإلغاء)",
   "capture_inprogress": "جارٍ: {x}+…",
   "capture_unknown": "مفتاح غير معروف: {x}",
-
   "notif_auto_started": "الوضع التلقائي بدأ",
   "notif_auto_stopped": "الوضع التلقائي توقف",
   "notif_panic": "إيقاف طارئ",
   "notif_limit": "{n, plural, one {تم بلوغ الحد ({n_fmt} نقرة)} other {تم بلوغ الحد ({n_fmt} نقرة)}}",
-
   "trigger_button8": "الزر الجانبي للخلف (٨)",
   "trigger_button9": "الزر الجانبي للأمام (٩)",
   "trigger_middle": "الزر الأوسط",

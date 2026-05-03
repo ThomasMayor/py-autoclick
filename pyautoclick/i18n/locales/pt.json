@@ -4,10 +4,8 @@
     "name": "Português",
     "machine_translated": true
   },
-
   "app_title": "Auto-clicker",
   "instance_already_running": "Já existe uma instância do Auto-clicker em execução.",
-
   "status_waiting": "À espera",
   "status_clicking": "A clicar",
   "status_auto": "Modo automático em execução",
@@ -16,13 +14,12 @@
   "label_clicks": "{n, plural, one {Clique: {n_fmt}} other {Cliques: {n_fmt}}}",
   "label_hotkeys": "Atalhos: {x}",
   "theme_tip": "Alternar entre tema claro e escuro",
-
   "tab_hold": "Modo manter",
   "tab_auto": "Modo automático",
   "tab_positions": "Posições",
   "tab_hotkeys": "Atalhos",
+  "tab_settings": "Definições",
   "tab_test": "Teste",
-
   "hold_enable": "Ativar modo manter",
   "hold_enable_tip": "Quando desativado, o botão de disparo deixa de gerar cliques.",
   "label_trigger": "Disparador:",
@@ -33,7 +30,6 @@
   "cps_tip": "Cadência alvo. O cursor cobre 1-50, o campo até 200.",
   "label_jitter": "Variação (± ms):",
   "hold_jitter_tip": "Variação aleatória (±) aplicada ao intervalo entre cliques.\n0 = cadência perfeitamente regular.",
-
   "auto_enable": "Ativar modo automático",
   "auto_enable_tip": "Inicia o clique automático. Reinicia o contador da sessão.",
   "label_interval": "Intervalo (ms):",
@@ -45,7 +41,6 @@
   "limit_tip": "Para o modo automático após N cliques. 0 = ilimitado.",
   "use_positions": "Percorrer posições (separador Posições)",
   "use_positions_tip": "Se ativado, o cursor é movido para cada posição antes de clicar.",
-
   "positions_intro": "Lista de posições percorridas em modo automático (se ativado).",
   "btn_add": "Adicionar",
   "btn_add_tip": "Captura a posição atual do cursor.",
@@ -53,7 +48,6 @@
   "btn_add_delayed_tip": "Dá 3 segundos para posicionar o cursor, depois captura.",
   "btn_remove": "Remover",
   "btn_clear": "Limpar",
-
   "hk_toggle": "Alternar modo automático:",
   "hk_toggle_tip": "Ativa/desativa o modo automático. Funciona sem foco.",
   "hk_momentary": "Manter modo automático:",
@@ -68,7 +62,6 @@
   "caveat_unknown_display": "Servidor gráfico desconhecido. Os atalhos globais podem não funcionar.",
   "label_language": "Idioma:",
   "language_tip": "Muda o idioma da interface. A UI é reconstruída ao mudar.",
-
   "test_intro": "Clica em qualquer parte do ecrã para identificar o botão.\nÚtil para identificar os botões laterais 8 / 9 de um rato.",
   "test_box_title": "Último evento do rato",
   "label_button": "Botão:",
@@ -77,18 +70,15 @@
   "label_curpos": "Posição atual:",
   "state_pressed": "premido",
   "state_released": "libertado",
-
   "btn_capture": "Capturar",
   "capture_title": "Capturar atalho",
   "capture_prompt": "Prime a combinação desejada\n(Esc para cancelar)",
   "capture_inprogress": "Em curso: {x}+…",
   "capture_unknown": "Tecla não reconhecida: {x}",
-
   "notif_auto_started": "Modo automático iniciado",
   "notif_auto_stopped": "Modo automático parado",
   "notif_panic": "PARAGEM DE EMERGÊNCIA",
   "notif_limit": "{n, plural, one {Limite atingido ({n_fmt} clique)} other {Limite atingido ({n_fmt} cliques)}}",
-
   "trigger_button8": "Botão lateral atrás (8)",
   "trigger_button9": "Botão lateral à frente (9)",
   "trigger_middle": "Botão do meio",

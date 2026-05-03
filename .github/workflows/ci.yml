@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main]
 
+# Action versions are pinned to majors that ship Node 24 binaries — Node 20
+# is being removed from GitHub runners on 2026-09-16. See:
+# https://github.blog/changelog/2024-...-actions-deprecating-node20
+
 jobs:
   test:
     name: Test on ${{ matrix.os }} / Python ${{ matrix.python-version }}
@@ -18,10 +22,10 @@ jobs:
         python-version: ["3.10", "3.11", "3.12"]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
@@ -43,21 +47,24 @@ jobs:
         if: runner.os == 'Linux'
         run: xvfb-run --auto-servernum pytest -v
 
+      # Coverage upload: gate on Codecov being available rather than masking
+      # the step's own failures. ``fail_ci_if_error: false`` lets a Codecov
+      # outage pass quietly; we removed the ``continue-on-error: true`` that
+      # was double-bypassing real workflow misconfigurations.
       - name: Upload coverage to Codecov
-        if: runner.os == 'Linux' && matrix.python-version == '3.12'
-        uses: codecov/codecov-action@v4
+        if: runner.os == 'Linux' && matrix.python-version == '3.12' && hashFiles('coverage.xml') != ''
+        uses: codecov/codecov-action@v5
         with:
-          file: ./coverage.xml
-          fail_ci_if_error: false   # Codecov outage should not red the build
-        continue-on-error: true     # tolerate missing CODECOV_TOKEN on first runs
+          files: ./coverage.xml
+          fail_ci_if_error: false
 
   lint:
     name: Lint (ruff + mypy)
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip

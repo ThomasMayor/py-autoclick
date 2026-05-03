@@ -4,10 +4,8 @@
     "name": "Deutsch",
     "machine_translated": true
   },
-
   "app_title": "Auto-clicker",
   "instance_already_running": "Eine Instanz von Auto-clicker läuft bereits.",
-
   "status_waiting": "Bereit",
   "status_clicking": "Klickt",
   "status_auto": "Auto-Modus läuft",
@@ -16,13 +14,12 @@
   "label_clicks": "{n, plural, one {Klick: {n_fmt}} other {Klicks: {n_fmt}}}",
   "label_hotkeys": "Kürzel: {x}",
   "theme_tip": "Zwischen hellem und dunklem Theme wechseln",
-
   "tab_hold": "Halten-Modus",
   "tab_auto": "Auto-Modus",
   "tab_positions": "Positionen",
   "tab_hotkeys": "Kürzel",
+  "tab_settings": "Einstellungen",
   "tab_test": "Test",
-
   "hold_enable": "Halten-Modus aktivieren",
   "hold_enable_tip": "Wenn deaktiviert, löst die Auslösertaste keine Klicks mehr aus.",
   "label_trigger": "Auslöser:",
@@ -33,7 +30,6 @@
   "cps_tip": "Zielrate. Schieberegler 1-50, Eingabefeld bis 200.",
   "label_jitter": "Variation (± ms):",
   "hold_jitter_tip": "Zufällige Variation (±) auf das Intervall zwischen Klicks.\n0 = perfekt regelmäßige Rate.",
-
   "auto_enable": "Auto-Modus aktivieren",
   "auto_enable_tip": "Startet den Auto-Klick. Setzt den Sitzungszähler zurück.",
   "label_interval": "Intervall (ms):",
@@ -45,7 +41,6 @@
   "limit_tip": "Stoppt den Auto-Modus nach N Klicks. 0 = unbegrenzt.",
   "use_positions": "Positionen durchlaufen (Tab Positionen)",
   "use_positions_tip": "Wenn aktiviert, wird der Cursor vor jedem Klick auf die nächste Position bewegt.",
-
   "positions_intro": "Liste der im Auto-Modus durchlaufenen Positionen (sofern aktiviert).",
   "btn_add": "Hinzufügen",
   "btn_add_tip": "Erfasst die aktuelle Cursor-Position.",
@@ -53,7 +48,6 @@
   "btn_add_delayed_tip": "Gibt 3 Sekunden Zeit zum Positionieren des Cursors, dann erfasst.",
   "btn_remove": "Entfernen",
   "btn_clear": "Leeren",
-
   "hk_toggle": "Auto-Modus umschalten:",
   "hk_toggle_tip": "Schaltet den Auto-Modus um. Funktioniert ohne Fokus.",
   "hk_momentary": "Auto-Modus halten:",
@@ -68,7 +62,6 @@
   "caveat_unknown_display": "Unbekannter Display-Server. Globale Kürzel funktionieren möglicherweise nicht.",
   "label_language": "Sprache:",
   "language_tip": "Ändert die Oberflächensprache. Die UI wird beim Wechsel neu aufgebaut.",
-
   "test_intro": "Klicke irgendwo auf den Bildschirm, um die Taste zu identifizieren.\nNützlich, um die Seitentasten 8 / 9 einer Maus zu finden.",
   "test_box_title": "Letztes Maus-Ereignis",
   "label_button": "Taste:",
@@ -77,18 +70,15 @@
   "label_curpos": "Aktuelle Position:",
   "state_pressed": "gedrückt",
   "state_released": "losgelassen",
-
   "btn_capture": "Erfassen",
   "capture_title": "Kürzel erfassen",
   "capture_prompt": "Drücke die gewünschte Kombination\n(Esc zum Abbrechen)",
   "capture_inprogress": "Läuft: {x}+…",
   "capture_unknown": "Taste nicht erkannt: {x}",
-
   "notif_auto_started": "Auto-Modus gestartet",
   "notif_auto_stopped": "Auto-Modus gestoppt",
   "notif_panic": "NOTSTOPP",
   "notif_limit": "{n, plural, one {Limit erreicht ({n_fmt} Klick)} other {Limit erreicht ({n_fmt} Klicks)}}",
-
   "trigger_button8": "Seitentaste hinten (8)",
   "trigger_button9": "Seitentaste vorn (9)",
   "trigger_middle": "Mittlere Taste",

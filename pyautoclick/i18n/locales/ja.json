@@ -5,10 +5,8 @@
     "machine_translated": true,
     "_note": "Japanese has no plural distinction; same form for one/other."
   },
-
   "app_title": "オートクリッカー",
   "instance_already_running": "オートクリッカーのインスタンスは既に実行中です。",
-
   "status_waiting": "待機中",
   "status_clicking": "クリック中",
   "status_auto": "自動モード実行中",
@@ -17,13 +15,12 @@
   "label_clicks": "{n, plural, one {クリック数: {n_fmt}} other {クリック数: {n_fmt}}}",
   "label_hotkeys": "ショートカット: {x}",
   "theme_tip": "ダークテーマとライトテーマを切り替え",
-
   "tab_hold": "ホールドモード",
   "tab_auto": "自動モード",
   "tab_positions": "位置",
   "tab_hotkeys": "ショートカット",
+  "tab_settings": "設定",
   "tab_test": "テスト",
-
   "hold_enable": "ホールドモードを有効化",
   "hold_enable_tip": "無効にすると、トリガーボタンを押してもクリックされません。",
   "label_trigger": "トリガー:",
@@ -34,7 +31,6 @@
   "cps_tip": "目標レート。スライダーは1〜50、フィールドは200まで。",
   "label_jitter": "変動 (± ms):",
   "hold_jitter_tip": "クリック間隔に適用されるランダム変動 (±)。\n0 = 完全に均一。",
-
   "auto_enable": "自動モードを有効化",
   "auto_enable_tip": "自動クリックを開始。セッションカウンターをリセット。",
   "label_interval": "間隔 (ms):",
@@ -46,7 +42,6 @@
   "limit_tip": "N回のクリック後に自動モードを停止。0 = 無制限。",
   "use_positions": "位置を巡回 (位置タブ)",
   "use_positions_tip": "有効にすると、クリック前にカーソルを各位置に移動します。",
-
   "positions_intro": "自動モード時に巡回する位置のリスト(有効な場合)。",
   "btn_add": "追加",
   "btn_add_tip": "現在のカーソル位置をキャプチャ。",
@@ -54,7 +49,6 @@
   "btn_add_delayed_tip": "3秒間でカーソルを配置してからキャプチャ。",
   "btn_remove": "削除",
   "btn_clear": "クリア",
-
   "hk_toggle": "自動モード切替:",
   "hk_toggle_tip": "自動モードのオン/オフを切替。フォーカス無しでも動作。",
   "hk_momentary": "自動モードを保持:",
@@ -69,7 +63,6 @@
   "caveat_unknown_display": "不明なディスプレイサーバー。グローバルショートカットは動作しないかもしれません。",
   "label_language": "言語:",
   "language_tip": "インターフェース言語を変更。変更時に UI が再構築されます。",
-
   "test_intro": "画面の任意の場所をクリックしてボタンを識別。\nマウスのサイドボタン 8 / 9 を識別するのに便利です。",
   "test_box_title": "最後のマウスイベント",
   "label_button": "ボタン:",
@@ -78,18 +71,15 @@
   "label_curpos": "現在位置:",
   "state_pressed": "押下",
   "state_released": "解放",
-
   "btn_capture": "キャプチャ",
   "capture_title": "ショートカットをキャプチャ",
   "capture_prompt": "希望の組み合わせを押してください\n(Esc でキャンセル)",
   "capture_inprogress": "進行中: {x}+…",
   "capture_unknown": "認識されないキー: {x}",
-
   "notif_auto_started": "自動モード開始",
   "notif_auto_stopped": "自動モード停止",
   "notif_panic": "緊急停止",
   "notif_limit": "{n, plural, one {上限到達 ({n_fmt} クリック)} other {上限到達 ({n_fmt} クリック)}}",
-
   "trigger_button8": "サイドボタン 戻る (8)",
   "trigger_button9": "サイドボタン 進む (9)",
   "trigger_middle": "中ボタン",

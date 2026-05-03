@@ -3,10 +3,8 @@
     "language": "en",
     "name": "English"
   },
-
   "app_title": "Auto-clicker",
   "instance_already_running": "An Auto-clicker instance is already running.",
-
   "status_waiting": "Idle",
   "status_clicking": "Clicking",
   "status_auto": "Auto mode running",
@@ -15,13 +13,12 @@
   "label_clicks": "{n, plural, one {Click: {n_fmt}} other {Clicks: {n_fmt}}}",
   "label_hotkeys": "Shortcuts: {x}",
   "theme_tip": "Toggle between dark and light theme",
-
   "tab_hold": "Hold mode",
   "tab_auto": "Auto mode",
   "tab_positions": "Positions",
   "tab_hotkeys": "Shortcuts",
+  "tab_settings": "Settings",
   "tab_test": "Test",
-
   "hold_enable": "Enable hold mode",
   "hold_enable_tip": "When disabled, the trigger button no longer fires clicks.",
   "label_trigger": "Trigger:",
@@ -32,7 +29,6 @@
   "cps_tip": "Target rate. Slider covers 1-50, field up to 200.",
   "label_jitter": "Variation (± ms):",
   "hold_jitter_tip": "Random variation (±) applied to the interval between clicks.\n0 = perfectly regular rate.",
-
   "auto_enable": "Enable auto mode",
   "auto_enable_tip": "Starts auto-click. Resets the session counter.",
   "label_interval": "Interval (ms):",
@@ -44,7 +40,6 @@
   "limit_tip": "Stops auto mode after N clicks. 0 = unlimited.",
   "use_positions": "Cycle through positions (Positions tab)",
   "use_positions_tip": "If enabled, cursor is moved to each position before clicking.",
-
   "positions_intro": "List of positions cycled through in auto mode (if enabled).",
   "btn_add": "Add",
   "btn_add_tip": "Captures the current cursor position.",
@@ -52,7 +47,6 @@
   "btn_add_delayed_tip": "Gives 3 seconds to position the cursor, then captures.",
   "btn_remove": "Remove",
   "btn_clear": "Clear",
-
   "hk_toggle": "Toggle auto mode:",
   "hk_toggle_tip": "Toggles auto mode on/off. Works without focus.",
   "hk_momentary": "Hold auto mode:",
@@ -67,7 +61,6 @@
   "caveat_unknown_display": "Unknown display server. Global hotkeys may not work.",
   "label_language": "Language:",
   "language_tip": "Changes interface language. The UI is rebuilt on change.",
-
   "test_intro": "Click anywhere on the screen to identify the button.\nUseful for spotting side buttons 8 / 9 of a mouse.",
   "test_box_title": "Last mouse event",
   "label_button": "Button:",
@@ -76,18 +69,15 @@
   "label_curpos": "Current position:",
   "state_pressed": "pressed",
   "state_released": "released",
-
   "btn_capture": "Capture",
   "capture_title": "Capture shortcut",
   "capture_prompt": "Press the desired combination\n(Esc to cancel)",
   "capture_inprogress": "In progress: {x}+…",
   "capture_unknown": "Unrecognized key: {x}",
-
   "notif_auto_started": "Auto mode started",
   "notif_auto_stopped": "Auto mode stopped",
   "notif_panic": "EMERGENCY STOP",
   "notif_limit": "{n, plural, one {Limit reached ({n_fmt} click)} other {Limit reached ({n_fmt} clicks)}}",
-
   "trigger_button8": "Side button back (8)",
   "trigger_button9": "Side button forward (9)",
   "trigger_middle": "Middle button",
