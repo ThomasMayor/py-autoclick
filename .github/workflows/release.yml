@@ -1,0 +1,183 @@
+name: Release binaries to GitHub
+
+# Runs in parallel with publish.yml on every v*.*.* tag. publish.yml pushes
+# the Python wheel to PyPI; this one builds standalone binaries for end
+# users who don't want to install Python and attaches them to the GitHub
+# Release page.
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write   # required by softprops/action-gh-release
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  # ---------------------------------------------------------------------
+  # Per-OS standalone binaries via PyInstaller
+  # ---------------------------------------------------------------------
+  build-binary:
+    name: Build ${{ matrix.os }} binary
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            asset_name: pyautoclick-linux-x86_64
+          - os: windows-latest
+            asset_name: pyautoclick-windows-x86_64.exe
+          - os: macos-latest
+            asset_name: pyautoclick-macos-arm64.zip   # zipped .app bundle
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install package + PyInstaller
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+          python -m pip install "pyinstaller>=6.0"
+
+      - name: Install xvfb (Linux only — pynput needs DISPLAY at import for the build)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y xvfb
+
+      - name: Build with PyInstaller (Linux)
+        if: runner.os == 'Linux'
+        run: xvfb-run --auto-servernum pyinstaller pyautoclick.spec --clean --noconfirm
+
+      - name: Build with PyInstaller (Windows / macOS)
+        if: runner.os != 'Linux'
+        run: pyinstaller pyautoclick.spec --clean --noconfirm
+
+      # Normalize artifact names so the upload step works the same on all OS
+      - name: Package Linux artifact
+        if: runner.os == 'Linux'
+        run: mv dist/pyautoclick "dist/${{ matrix.asset_name }}"
+
+      - name: Package Windows artifact
+        if: runner.os == 'Windows'
+        shell: bash
+        run: mv dist/pyautoclick.exe "dist/${{ matrix.asset_name }}"
+
+      - name: Package macOS artifact (.app bundle, zipped)
+        if: runner.os == 'macOS'
+        run: |
+          cd dist
+          zip -r "${{ matrix.asset_name }}" PyAutoClick.app
+
+      - name: Sanity-check the binary launches
+        # Just ``--version`` would be cleaner, but the app has no CLI yet —
+        # we settle for "the binary loads its imports without crashing".
+        if: runner.os == 'Linux'
+        run: xvfb-run --auto-servernum timeout 3 "dist/${{ matrix.asset_name }}" || code=$?; \
+             test "$code" = 124 -o "$code" = 0   # timeout (124) is success here
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.asset_name }}
+          path: dist/${{ matrix.asset_name }}
+          retention-days: 7
+
+  # ---------------------------------------------------------------------
+  # Python source distribution + wheel (same artifacts as publish.yml,
+  # attached to the GitHub Release for users who prefer ``pip install
+  # ./pyautoclick-X.Y.Z-py3-none-any.whl``)
+  # ---------------------------------------------------------------------
+  build-python-dist:
+    name: Build Python sdist + wheel
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Build sdist + wheel
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: python-dist
+          path: dist/*
+
+  # ---------------------------------------------------------------------
+  # Aggregate all artifacts and publish a GitHub Release with notes
+  # extracted from CHANGELOG.md
+  # ---------------------------------------------------------------------
+  publish-release:
+    name: Create GitHub Release
+    needs: [build-binary, build-python-dist]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Flatten artifacts into a single directory
+        run: |
+          mkdir -p release-files
+          find artifacts -type f -exec cp {} release-files/ \;
+          ls -la release-files/
+
+      - name: Extract release notes for this tag from CHANGELOG.md
+        id: notes
+        shell: bash
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          # Slice out the "## [<version>] ..." section up to the next "## ["
+          notes=$(awk -v v="$version" '
+            /^## \[/ {
+              if (in_section) exit
+              if ($0 ~ "\\["v"\\]") { in_section=1; next }
+              next
+            }
+            in_section { print }
+          ' CHANGELOG.md)
+          if [ -z "$notes" ]; then
+            notes="See CHANGELOG.md for details."
+          fi
+          {
+            echo "notes<<RELNOTES_EOF"
+            echo "$notes"
+            echo "RELNOTES_EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Create / update the GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          body: |
+            ${{ steps.notes.outputs.notes }}
+
+            ---
+
+            **Downloads**
+
+            | Platform | File | Notes |
+            |---|---|---|
+            | Linux x86_64 | `pyautoclick-linux-x86_64` | Standalone, no Python required |
+            | Windows x86_64 | `pyautoclick-windows-x86_64.exe` | Standalone, unsigned (SmartScreen warning expected) |
+            | macOS arm64 | `pyautoclick-macos-arm64.zip` | `.app` bundle, unsigned (right-click → Open the first time) |
+            | Python wheel | `pyautoclick-*.whl` | `pip install pyautoclick-*.whl` (any platform) |
+            | Source dist | `pyautoclick-*.tar.gz` | `pip install pyautoclick-*.tar.gz` (any platform) |
+
+            See `CHANGELOG.md` and the [README](https://github.com/ThomasMayor/py-autoclick#readme) for installation details per OS.
+          files: release-files/*
+          draft: false
+          prerelease: false
+          fail_on_unmatched_files: true

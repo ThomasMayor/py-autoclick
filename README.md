@@ -22,6 +22,27 @@ architecture (UI / services / core / persistence / i18n).
 
 ## Installation
 
+### Pre-built binaries (no Python required)
+
+Download the standalone binary for your OS from the [latest GitHub
+Release](https://github.com/ThomasMayor/py-autoclick/releases/latest):
+
+| Platform | File | Notes |
+|---|---|---|
+| Linux x86_64 | `pyautoclick-linux-x86_64` | `chmod +x` then double-click or run from terminal |
+| Windows x86_64 | `pyautoclick-windows-x86_64.exe` | Double-click. SmartScreen may warn (binary is unsigned) — click "More info → Run anyway" |
+| macOS arm64 | `pyautoclick-macos-arm64.zip` | Unzip → drag `PyAutoClick.app` into `/Applications`. First launch: right-click → Open (Gatekeeper warning is expected, the binary is unsigned) |
+
+Linux additionally needs to grant input access if running via Wayland — see
+the Wayland section below.
+
+### From PyPI
+
+```bash
+pip install --user pyautoclick
+pyautoclick
+```
+
 ### Development (editable)
 
 ```bash

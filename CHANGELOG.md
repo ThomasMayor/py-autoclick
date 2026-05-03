@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.4] — 2026-05-03
+
+### Added
+- **GitHub Releases with standalone binaries.** A new
+  `.github/workflows/release.yml` triggers on every `v*.*.*` tag and
+  builds, in parallel:
+  - Linux x86_64 ELF binary (`pyautoclick-linux-x86_64`)
+  - Windows x86_64 executable (`pyautoclick-windows-x86_64.exe`)
+  - macOS arm64 `.app` bundle (`pyautoclick-macos-arm64.zip`)
+  - Python wheel + source distribution
+- All five artifacts are attached to a GitHub Release whose body is
+  extracted from the matching `## [<version>]` block in `CHANGELOG.md`.
+- New top-level `pyautoclick.spec` driving PyInstaller cross-platform —
+  bundles `pyautoclick.assets`, every locale JSON, and pynput's platform
+  backend (collected explicitly because pynput loads it from a string at
+  runtime).
+- macOS bundle declares `NSAccessibilityUsageDescription` in `Info.plist`
+  so the system permission prompt explains why global input capture is
+  needed.
+- README "Pre-built binaries" section with per-OS install caveats
+  (Windows SmartScreen, macOS Gatekeeper — both expected since the
+  binaries are unsigned for now).
+
 ## [0.3.3] — 2026-05-03
 
 ### Fixed
