@@ -17,9 +17,11 @@ class TestTab(BaseTab):
         L, C = self.col(0), self.col(1)
         justify = "right" if self.is_rtl else "left"
 
-        ttk.Label(self, text=t("test_intro"), anchor=self.anchor_label,
-                  foreground="gray", justify=justify).pack(
-            anchor=self.anchor_label, pady=(0, 14),
+        ttk.Label(
+            self, text=t("test_intro"), anchor=self.anchor_label, foreground="gray", justify=justify
+        ).pack(
+            anchor=self.anchor_label,
+            pady=(0, 14),
         )
 
         box = ttk.LabelFrame(self, text=t("test_box_title"), padding=16)
@@ -32,11 +34,16 @@ class TestTab(BaseTab):
 
         def labeled(parent, r, label_key, var):
             ttk.Label(parent, text=t(label_key), anchor=self.anchor_label).grid(
-                row=r, column=L, sticky=SL, pady=4,
+                row=r,
+                column=L,
+                sticky=SL,
+                pady=4,
             )
-            ttk.Label(parent, textvariable=var,
-                      font=("monospace", 10, "bold")).grid(
-                row=r, column=C, sticky=SL, padx=14,
+            ttk.Label(parent, textvariable=var, font=("monospace", 10, "bold")).grid(
+                row=r,
+                column=C,
+                sticky=SL,
+                padx=14,
             )
 
         labeled(box, 0, "label_button", self.button_var)
@@ -48,8 +55,7 @@ class TestTab(BaseTab):
     def update_event(self, x: int, y: int, button, pressed: bool) -> None:
         try:
             self.button_var.set(str(button))
-            self.state_var.set(self.t("state_pressed") if pressed
-                               else self.t("state_released"))
+            self.state_var.set(self.t("state_pressed") if pressed else self.t("state_released"))
             self.pos_var.set(f"({x}, {y})")
         except (tk.TclError, AttributeError):
             pass

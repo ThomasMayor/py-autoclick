@@ -15,14 +15,15 @@ import logging
 import socket
 import sys
 import threading
-from typing import IO, Callable
+from collections.abc import Callable
+from typing import IO
 
 from pyautoclick.paths import CONFIG_DIR, LOCK_FILE, SOCKET_FILE
 
 logger = logging.getLogger(__name__)
 
 _IS_WINDOWS = sys.platform == "win32"
-_PORT_FILE = CONFIG_DIR / "app.port"   # Windows-only: holds the loopback port
+_PORT_FILE = CONFIG_DIR / "app.port"  # Windows-only: holds the loopback port
 
 
 # ----------------------------------------------------------------------
@@ -59,6 +60,7 @@ else:
 # IPC: focus request channel
 # ----------------------------------------------------------------------
 
+
 def _make_server_socket() -> tuple[socket.socket, str | int]:
     """Create the IPC server socket. Returns (sock, identifier).
 
@@ -67,7 +69,7 @@ def _make_server_socket() -> tuple[socket.socket, str | int]:
     """
     if _IS_WINDOWS:
         srv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        srv.bind(("127.0.0.1", 0))   # OS picks a free port
+        srv.bind(("127.0.0.1", 0))  # OS picks a free port
         port = srv.getsockname()[1]
         _PORT_FILE.write_text(str(port))
         return srv, port
@@ -146,11 +148,13 @@ def start_focus_server(on_focus_request: Callable[[], None]) -> socket.socket | 
             conn.close()
             try:
                 on_focus_request()
-            except Exception:    # never let a UI callback kill the listener
+            except Exception:  # never let a UI callback kill the listener
                 logger.exception("on_focus_request callback raised")
 
     threading.Thread(
-        target=loop, name="single-instance-server", daemon=True,
+        target=loop,
+        name="single-instance-server",
+        daemon=True,
     ).start()
     return srv
 

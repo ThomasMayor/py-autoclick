@@ -21,15 +21,25 @@ class PositionsTab(BaseTab):
         t = self.t
         SL = self.sticky_label
 
-        ttk.Label(self, text=t("positions_intro"),
-                  anchor=self.anchor_label, foreground="gray").grid(
-            row=0, column=0, columnspan=2, sticky=SL, pady=(0, 8),
+        ttk.Label(
+            self, text=t("positions_intro"), anchor=self.anchor_label, foreground="gray"
+        ).grid(
+            row=0,
+            column=0,
+            columnspan=2,
+            sticky=SL,
+            pady=(0, 8),
         )
 
-        self.pos_listbox = tk.Listbox(self, height=POSITIONS_LISTBOX_HEIGHT,
-                                      activestyle="dotbox",
-                                      borderwidth=0, highlightthickness=1,
-                                      relief="flat", exportselection=False)
+        self.pos_listbox = tk.Listbox(
+            self,
+            height=POSITIONS_LISTBOX_HEIGHT,
+            activestyle="dotbox",
+            borderwidth=0,
+            highlightthickness=1,
+            relief="flat",
+            exportselection=False,
+        )
         theme_listbox(self.pos_listbox, self.ctx.get_theme())
         self.pos_listbox.grid(row=1, column=self.col(0), sticky="nsew")
         sb = ttk.Scrollbar(self, orient="vertical", command=self.pos_listbox.yview)
@@ -48,10 +58,8 @@ class PositionsTab(BaseTab):
         b2 = ttk.Button(btns, text=t("btn_add_delayed"), command=self._add_delayed)
         b2.pack(side=side, padx=(6, 0))
         Tooltip(b2, t("btn_add_delayed_tip"))
-        ttk.Button(btns, text=t("btn_remove"),
-                   command=self._remove).pack(side=side, padx=(6, 0))
-        ttk.Button(btns, text=t("btn_clear"),
-                   command=self._clear).pack(side=side, padx=(6, 0))
+        ttk.Button(btns, text=t("btn_remove"), command=self._remove).pack(side=side, padx=(6, 0))
+        ttk.Button(btns, text=t("btn_clear"), command=self._clear).pack(side=side, padx=(6, 0))
 
     def _refresh(self) -> None:
         self.pos_listbox.delete(0, tk.END)

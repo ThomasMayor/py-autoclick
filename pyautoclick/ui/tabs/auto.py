@@ -21,31 +21,43 @@ class AutoTab(BaseTab):
 
         # Enable
         self.auto_var = tk.BooleanVar(value=False)
-        cbx = ttk.Checkbutton(self, text=t("auto_enable"),
-                              variable=self.auto_var,
-                              command=self._on_auto_toggle)
+        cbx = ttk.Checkbutton(
+            self, text=t("auto_enable"), variable=self.auto_var, command=self._on_auto_toggle
+        )
         cbx.grid(row=0, column=0, columnspan=2, sticky=SL, pady=(0, 12))
         Tooltip(cbx, t("auto_enable_tip"))
 
         # Action
         ttk.Label(self, text=t("label_action"), anchor=self.anchor_label).grid(
-            row=1, column=L, sticky=SL, pady=8,
+            row=1,
+            column=L,
+            sticky=SL,
+            pady=8,
         )
         action_labels = [t(f"action_{k}") for k in ACTION_KEYS]
         self.auto_action_var = tk.StringVar(value=t(f"action_{s.auto_action}"))
-        cb = ttk.Combobox(self, textvariable=self.auto_action_var,
-                          values=action_labels, state="readonly")
+        cb = ttk.Combobox(
+            self, textvariable=self.auto_action_var, values=action_labels, state="readonly"
+        )
         cb.grid(row=1, column=C, sticky="ew", pady=8)
         cb.bind("<<ComboboxSelected>>", self._on_auto_action_change)
 
         # Interval
         ttk.Label(self, text=t("label_interval"), anchor=self.anchor_label).grid(
-            row=2, column=L, sticky=SL, pady=8,
+            row=2,
+            column=L,
+            sticky=SL,
+            pady=8,
         )
         self.auto_interval_var = tk.IntVar(value=s.auto_interval_ms)
-        sp1 = ttk.Spinbox(self, from_=1, to=10000, increment=10,
-                          textvariable=self.auto_interval_var,
-                          command=self._on_interval_change)
+        sp1 = ttk.Spinbox(
+            self,
+            from_=1,
+            to=10000,
+            increment=10,
+            textvariable=self.auto_interval_var,
+            command=self._on_interval_change,
+        )
         sp1.grid(row=2, column=C, sticky="ew", pady=8)
         sp1.bind("<FocusOut>", lambda _e: self._on_interval_change())
         sp1.bind("<Return>", lambda _e: self._on_interval_change())
@@ -53,12 +65,20 @@ class AutoTab(BaseTab):
 
         # Press duration
         ttk.Label(self, text=t("label_press"), anchor=self.anchor_label).grid(
-            row=3, column=L, sticky=SL, pady=8,
+            row=3,
+            column=L,
+            sticky=SL,
+            pady=8,
         )
         self.auto_press_var = tk.IntVar(value=s.auto_press_ms)
-        sp2 = ttk.Spinbox(self, from_=0, to=2000, increment=5,
-                          textvariable=self.auto_press_var,
-                          command=self._on_press_change)
+        sp2 = ttk.Spinbox(
+            self,
+            from_=0,
+            to=2000,
+            increment=5,
+            textvariable=self.auto_press_var,
+            command=self._on_press_change,
+        )
         sp2.grid(row=3, column=C, sticky="ew", pady=8)
         sp2.bind("<FocusOut>", lambda _e: self._on_press_change())
         sp2.bind("<Return>", lambda _e: self._on_press_change())
@@ -66,12 +86,20 @@ class AutoTab(BaseTab):
 
         # Jitter
         ttk.Label(self, text=t("label_jitter"), anchor=self.anchor_label).grid(
-            row=4, column=L, sticky=SL, pady=8,
+            row=4,
+            column=L,
+            sticky=SL,
+            pady=8,
         )
         self.auto_jitter_var = tk.IntVar(value=s.auto_jitter_ms)
-        sp3 = ttk.Spinbox(self, from_=0, to=2000, increment=5,
-                          textvariable=self.auto_jitter_var,
-                          command=self._on_jitter_change)
+        sp3 = ttk.Spinbox(
+            self,
+            from_=0,
+            to=2000,
+            increment=5,
+            textvariable=self.auto_jitter_var,
+            command=self._on_jitter_change,
+        )
         sp3.grid(row=4, column=C, sticky="ew", pady=8)
         sp3.bind("<FocusOut>", lambda _e: self._on_jitter_change())
         sp3.bind("<Return>", lambda _e: self._on_jitter_change())
@@ -79,12 +107,20 @@ class AutoTab(BaseTab):
 
         # Click limit
         ttk.Label(self, text=t("label_limit"), anchor=self.anchor_label).grid(
-            row=5, column=L, sticky=SL, pady=8,
+            row=5,
+            column=L,
+            sticky=SL,
+            pady=8,
         )
         self.auto_limit_var = tk.IntVar(value=s.auto_click_limit)
-        sp4 = ttk.Spinbox(self, from_=0, to=1_000_000, increment=10,
-                          textvariable=self.auto_limit_var,
-                          command=self._on_limit_change)
+        sp4 = ttk.Spinbox(
+            self,
+            from_=0,
+            to=1_000_000,
+            increment=10,
+            textvariable=self.auto_limit_var,
+            command=self._on_limit_change,
+        )
         sp4.grid(row=5, column=C, sticky="ew", pady=8)
         sp4.bind("<FocusOut>", lambda _e: self._on_limit_change())
         sp4.bind("<Return>", lambda _e: self._on_limit_change())
@@ -92,9 +128,12 @@ class AutoTab(BaseTab):
 
         # Cycle through positions
         self.use_positions_var = tk.BooleanVar(value=s.auto_use_positions)
-        cbp = ttk.Checkbutton(self, text=t("use_positions"),
-                              variable=self.use_positions_var,
-                              command=self._on_use_positions_change)
+        cbp = ttk.Checkbutton(
+            self,
+            text=t("use_positions"),
+            variable=self.use_positions_var,
+            command=self._on_use_positions_change,
+        )
         cbp.grid(row=6, column=0, columnspan=2, sticky=SL, pady=(12, 0))
         Tooltip(cbp, t("use_positions_tip"))
 

@@ -35,7 +35,10 @@ class HotkeysTab(BaseTab):
 
         def hk_row(r, label_key, cfg_attr, tip_key):
             ttk.Label(self, text=t(label_key), anchor=self.anchor_label).grid(
-                row=r, column=L, sticky=SL, pady=8,
+                row=r,
+                column=L,
+                sticky=SL,
+                pady=8,
             )
             entry = HotkeyEntry(
                 self,
@@ -50,34 +53,37 @@ class HotkeysTab(BaseTab):
         hk_row(row_off + 1, "hk_momentary", "hotkey_auto_momentary", "hk_momentary_tip")
         hk_row(row_off + 2, "hk_panic", "hotkey_panic", "hk_panic_tip")
 
-        ttk.Separator(self).grid(row=row_off + 3, column=0, columnspan=2,
-                                 sticky="ew", pady=16)
+        ttk.Separator(self).grid(row=row_off + 3, column=0, columnspan=2, sticky="ew", pady=16)
 
         # Notifications
         self.notify_var = tk.BooleanVar(value=self.settings.notify_enabled)
-        cbn = ttk.Checkbutton(self, text=t("notify_enable"),
-                              variable=self.notify_var,
-                              command=self._on_notify_change)
+        cbn = ttk.Checkbutton(
+            self, text=t("notify_enable"), variable=self.notify_var, command=self._on_notify_change
+        )
         cbn.grid(row=row_off + 4, column=0, columnspan=2, sticky=SL, pady=(0, 8))
         Tooltip(cbn, t("notify_tip"))
 
         # Language selector
         ttk.Label(self, text=t("label_language"), anchor=self.anchor_label).grid(
-            row=row_off + 5, column=L, sticky=SL, pady=8,
+            row=row_off + 5,
+            column=L,
+            sticky=SL,
+            pady=8,
         )
         lang_labels = [LANG_LABELS[c] for c in LANGUAGES]
         self.lang_var = tk.StringVar(value=LANG_LABELS[self.settings.language])
-        cb_lang = ttk.Combobox(self, textvariable=self.lang_var,
-                               values=lang_labels, state="readonly")
+        cb_lang = ttk.Combobox(
+            self, textvariable=self.lang_var, values=lang_labels, state="readonly"
+        )
         cb_lang.grid(row=row_off + 5, column=C, sticky="ew", pady=8)
         cb_lang.bind("<<ComboboxSelected>>", self._on_lang_change)
         Tooltip(cb_lang, t("language_tip"))
 
         # Invalid combos error label
         self.error_var = tk.StringVar(value="")
-        ttk.Label(self, textvariable=self.error_var, anchor=self.anchor_label,
-                  foreground=ERROR_RED).grid(row=row_off + 6, column=0, columnspan=2,
-                                             sticky=SL, pady=(8, 0))
+        ttk.Label(
+            self, textvariable=self.error_var, anchor=self.anchor_label, foreground=ERROR_RED
+        ).grid(row=row_off + 6, column=0, columnspan=2, sticky=SL, pady=(8, 0))
 
     def _build_caveat_banner(self) -> int:
         """If the platform has known limitations, render an amber warning.
@@ -97,9 +103,19 @@ class HotkeysTab(BaseTab):
             return 0
         text = "\n".join(self.t(k) for k in seen)
         justify = "right" if self.is_rtl else "left"
-        ttk.Label(self, text="⚠ " + text, foreground=WARNING_AMBER,
-                  wraplength=560, justify=justify, anchor=self.anchor_label).grid(
-            row=0, column=0, columnspan=2, sticky="ew", pady=(0, 12),
+        ttk.Label(
+            self,
+            text="⚠ " + text,
+            foreground=WARNING_AMBER,
+            wraplength=560,
+            justify=justify,
+            anchor=self.anchor_label,
+        ).grid(
+            row=0,
+            column=0,
+            columnspan=2,
+            sticky="ew",
+            pady=(0, 12),
         )
         return 1
 

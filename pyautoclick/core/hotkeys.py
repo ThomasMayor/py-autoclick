@@ -42,21 +42,21 @@ class HotkeyManager:
                 logger.warning("invalid hotkey combo %r — ignored", combo)
                 invalid.append(combo)
                 continue
-            new_bindings.append({
-                "combo": combo,
-                "keys": keys,
-                "mode": spec["mode"],
-                "on_press": spec.get("on_press"),
-                "on_release": spec.get("on_release"),
-                "active": False,
-            })
+            new_bindings.append(
+                {
+                    "combo": combo,
+                    "keys": keys,
+                    "mode": spec["mode"],
+                    "on_press": spec.get("on_press"),
+                    "on_release": spec.get("on_release"),
+                    "active": False,
+                }
+            )
         with self._lock:
             self.bindings = new_bindings
             self.pressed = set()
         if new_bindings:
-            self.listener = keyboard.Listener(
-                on_press=self._on_press, on_release=self._on_release
-            )
+            self.listener = keyboard.Listener(on_press=self._on_press, on_release=self._on_release)
             self.listener.start()
         return invalid
 
@@ -87,7 +87,7 @@ class HotkeyManager:
                     if cb:
                         try:
                             cb()
-                        except Exception:    # never let user callback kill the listener
+                        except Exception:  # never let user callback kill the listener
                             logger.exception("hotkey on_press callback raised")
 
     def _on_release(self, key):
@@ -102,5 +102,5 @@ class HotkeyManager:
                         if cb:
                             try:
                                 cb()
-                            except Exception:    # never let user callback kill the listener
+                            except Exception:  # never let user callback kill the listener
                                 logger.exception("hotkey on_release callback raised")

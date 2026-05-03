@@ -39,21 +39,22 @@ class StatusBar(ttk.Frame):
 
         # In RTL: status & count are anchored to the right edge, theme & hotkeys
         # to the left edge — i.e. all sides flipped.
-        ttk.Label(self, textvariable=self.status_var,
-                  font=("", 9, "bold")).pack(side=_flip("left", self._rtl))
+        ttk.Label(self, textvariable=self.status_var, font=("", 9, "bold")).pack(
+            side=_flip("left", self._rtl)
+        )
         ttk.Label(self, textvariable=self.count_var).pack(
-            side=_flip("left", self._rtl), padx=STATUS_BAR_LABEL_GAP,
+            side=_flip("left", self._rtl),
+            padx=STATUS_BAR_LABEL_GAP,
         )
 
-        self.theme_btn = ttk.Button(self, width=THEME_BUTTON_WIDTH,
-                                    command=ctx.toggle_theme)
+        self.theme_btn = ttk.Button(self, width=THEME_BUTTON_WIDTH, command=ctx.toggle_theme)
         self.theme_btn.pack(side=_flip("right", self._rtl))
         Tooltip(self.theme_btn, ctx.t("theme_tip"))
         self.update_theme_icon()
 
-        ttk.Label(self, textvariable=self.hotkey_status_var,
-                  foreground=MUTED_GRAY).pack(
-            side=_flip("right", self._rtl), padx=(0, STATUS_BAR_HOTKEY_GAP),
+        ttk.Label(self, textvariable=self.hotkey_status_var, foreground=MUTED_GRAY).pack(
+            side=_flip("right", self._rtl),
+            padx=(0, STATUS_BAR_HOTKEY_GAP),
         )
 
     def update_theme_icon(self) -> None:

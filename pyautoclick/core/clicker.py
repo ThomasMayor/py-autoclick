@@ -39,7 +39,7 @@ class AutoClicker:
 
     def __init__(self, on_button_seen=None, on_auto_stopped=None):
         self.controller = Controller()
-        self.lock = threading.RLock()    # all mutable state below
+        self.lock = threading.RLock()  # all mutable state below
 
         # Mode maintenu
         self.hold_enabled = threading.Event()
@@ -73,10 +73,14 @@ class AutoClicker:
         self._mouse_listener.daemon = True
         self._mouse_listener.start()
         self._hold_thread = threading.Thread(
-            target=self._hold_loop, name="autoclicker-hold", daemon=True,
+            target=self._hold_loop,
+            name="autoclicker-hold",
+            daemon=True,
         )
         self._auto_thread = threading.Thread(
-            target=self._auto_loop, name="autoclicker-auto", daemon=True,
+            target=self._auto_loop,
+            name="autoclicker-auto",
+            daemon=True,
         )
         self._hold_thread.start()
         self._auto_thread.start()
@@ -176,7 +180,7 @@ class AutoClicker:
         if self.on_button_seen:
             try:
                 self.on_button_seen(x, y, button, pressed)
-            except Exception:    # never let a UI callback crash the listener
+            except Exception:  # never let a UI callback crash the listener
                 logger.exception("on_button_seen callback raised")
         if not self.hold_enabled.is_set():
             self.holding.clear()

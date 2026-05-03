@@ -75,7 +75,8 @@ def test_lock_blocks_other_process(tmp_config_dir: Path) -> None:
     lock_path = tmp_config_dir / "app.lock"
 
     p = multiprocessing.Process(
-        target=_hold_lock_subprocess, args=(str(lock_path), 0.5),
+        target=_hold_lock_subprocess,
+        args=(str(lock_path), 0.5),
     )
     p.start()
     # Wait briefly for the child to acquire

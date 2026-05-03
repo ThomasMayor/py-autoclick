@@ -50,8 +50,7 @@ class App:
         self.settings = Settings.load()
 
         # Detect language at first launch
-        if (not self.settings.language
-                or self.settings.language not in LANGUAGES):
+        if not self.settings.language or self.settings.language not in LANGUAGES:
             self.settings.language = detect_system_language()
         self.lang = self.settings.language
 
@@ -144,8 +143,9 @@ class App:
         self.status_bar.pack(side="bottom", fill="x")
 
         self.notebook = ttk.Notebook(self.root)
-        self.notebook.pack(fill="both", expand=True,
-                           padx=NOTEBOOK_PADX, pady=(NOTEBOOK_PADY_TOP, 0))
+        self.notebook.pack(
+            fill="both", expand=True, padx=NOTEBOOK_PADX, pady=(NOTEBOOK_PADY_TOP, 0)
+        )
 
         self.tabs = {}
         for TabCls in ALL_TABS:
@@ -196,24 +196,22 @@ class App:
     def _refresh_hotkeys(self) -> None:
         s = self.settings
         specs = [
-            {"combo": s.hotkey_auto_toggle, "mode": "toggle",
-             "on_press": self._hk_toggle_auto},
-            {"combo": s.hotkey_auto_momentary, "mode": "momentary",
-             "on_press": self._hk_momentary_press,
-             "on_release": self._hk_momentary_release},
-            {"combo": s.hotkey_panic, "mode": "toggle",
-             "on_press": self._hk_panic},
+            {"combo": s.hotkey_auto_toggle, "mode": "toggle", "on_press": self._hk_toggle_auto},
+            {
+                "combo": s.hotkey_auto_momentary,
+                "mode": "momentary",
+                "on_press": self._hk_momentary_press,
+                "on_release": self._hk_momentary_release,
+            },
+            {"combo": s.hotkey_panic, "mode": "toggle", "on_press": self._hk_panic},
         ]
         invalid = self.hotkey_manager.configure(specs)
         # Update hotkeys tab error label
         hk_tab = self.tabs.get("HotkeysTab")
         if isinstance(hk_tab, HotkeysTab):
-            hk_tab.set_error(self._t("invalid_combos", x=", ".join(invalid))
-                             if invalid else "")
+            hk_tab.set_error(self._t("invalid_combos", x=", ".join(invalid)) if invalid else "")
         # Update status bar
-        active = [c for c in (s.hotkey_auto_toggle,
-                              s.hotkey_auto_momentary,
-                              s.hotkey_panic) if c]
+        active = [c for c in (s.hotkey_auto_toggle, s.hotkey_auto_momentary, s.hotkey_panic) if c]
         if self.status_bar:
             self.status_bar.set_hotkeys(active)
 
@@ -226,9 +224,10 @@ class App:
         if auto_tab:
             auto_tab.auto_var.set(new_state)
         self.clicker.set_auto(new_state)
-        self._maybe_notify(self._t("app_title"),
-                           self._t("notif_auto_started") if new_state
-                           else self._t("notif_auto_stopped"))
+        self._maybe_notify(
+            self._t("app_title"),
+            self._t("notif_auto_started") if new_state else self._t("notif_auto_stopped"),
+        )
 
     def _hk_momentary_press(self):
         self.root.after(0, lambda: self._set_auto_via_ui(True))
@@ -268,8 +267,10 @@ class App:
             if auto_tab:
                 auto_tab.auto_var.set(False)
             if reason == "limit":
-                self._maybe_notify(self._t("app_title"),
-                                   self._t("notif_limit", n=self.settings.auto_click_limit))
+                self._maybe_notify(
+                    self._t("app_title"), self._t("notif_limit", n=self.settings.auto_click_limit)
+                )
+
         self.root.after(0, update)
 
     # -------- Tick --------

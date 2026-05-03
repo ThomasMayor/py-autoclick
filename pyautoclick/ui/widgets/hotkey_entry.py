@@ -18,14 +18,17 @@ class HotkeyEntry(ttk.Frame):
 
         self.entry = ttk.Entry(self, textvariable=self.var, state="readonly")
         self.entry.pack(side="left", fill="x", expand=True)
-        ttk.Button(self, text=t_func("btn_capture"),
-                   command=self._capture).pack(side="left", padx=(4, 0))
-        ttk.Button(self, text=HOTKEY_CLEAR_GLYPH,
-                   command=self._clear).pack(side="left", padx=(4, 0))
+        ttk.Button(self, text=t_func("btn_capture"), command=self._capture).pack(
+            side="left", padx=(4, 0)
+        )
+        ttk.Button(self, text=HOTKEY_CLEAR_GLYPH, command=self._clear).pack(
+            side="left", padx=(4, 0)
+        )
 
     def _capture(self):
         capture_hotkey_dialog(
-            self.winfo_toplevel(), self._on_captured,
+            self.winfo_toplevel(),
+            self._on_captured,
             title=self.t("capture_title"),
             prompt=self.t("capture_prompt"),
             in_progress_tpl=self.t("capture_inprogress"),

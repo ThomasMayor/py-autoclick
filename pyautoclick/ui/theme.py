@@ -20,6 +20,7 @@ def apply_theme(name: str) -> None:
     """Apply a theme to the global ttk style. Falls back to ``clam`` if sv-ttk absent."""
     try:
         import sv_ttk
+
         sv_ttk.set_theme("dark" if name == "dark" else "light")
     except ImportError:
         try:
@@ -36,17 +37,16 @@ def theme_listbox(lb: tk.Listbox, theme_name: str) -> None:
     is_dark = theme_name == "dark"
     fb_bg = DARK_BG if is_dark else LIGHT_BG
     fb_fg = DARK_FG if is_dark else LIGHT_FG
-    bg = (style.lookup("TEntry", "fieldbackground")
-          or style.lookup("TFrame", "background")
-          or fb_bg)
-    fg = (style.lookup("TEntry", "foreground")
-          or style.lookup("TLabel", "foreground")
-          or fb_fg)
+    bg = style.lookup("TEntry", "fieldbackground") or style.lookup("TFrame", "background") or fb_bg
+    fg = style.lookup("TEntry", "foreground") or style.lookup("TLabel", "foreground") or fb_fg
     sel_bg = style.lookup("Accent.TButton", "background") or ACCENT_BLUE
     lb.configure(
-        background=bg, foreground=fg,
-        selectbackground=sel_bg, selectforeground=SELECTION_FG,
-        highlightbackground=bg, highlightcolor=sel_bg,
+        background=bg,
+        foreground=fg,
+        selectbackground=sel_bg,
+        selectforeground=SELECTION_FG,
+        highlightbackground=bg,
+        highlightcolor=sel_bg,
     )
 
 

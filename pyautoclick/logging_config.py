@@ -55,7 +55,7 @@ def configure_logging(*, log_to_file: bool = True) -> None:
             CONFIG_DIR.mkdir(parents=True, exist_ok=True)
             file_handler = RotatingFileHandler(
                 LOG_FILE,
-                maxBytes=1_048_576,    # 1 MiB
+                maxBytes=1_048_576,  # 1 MiB
                 backupCount=3,
                 encoding="utf-8",
             )

@@ -8,4 +8,4 @@ from pyautoclick.ui.tabs.test import TestTab
 
 ALL_TABS = [HoldTab, AutoTab, PositionsTab, HotkeysTab, TestTab]
 
-__all__ = ["ALL_TABS", "HoldTab", "AutoTab", "PositionsTab", "HotkeysTab", "TestTab"]
+__all__ = ["ALL_TABS", "AutoTab", "HoldTab", "HotkeysTab", "PositionsTab", "TestTab"]

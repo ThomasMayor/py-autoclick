@@ -13,8 +13,8 @@ properties so existing tab code (``ctx.t``, ``ctx.settings``…) keeps working.
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Callable
 
 from pyautoclick.core.clicker import AutoClicker
 from pyautoclick.core.platform_capabilities import PlatformCapabilities
@@ -27,16 +27,16 @@ class StateContext:
 
     settings: Settings
     clicker: AutoClicker
-    commit: Callable[[], None]              # persist settings to disk
+    commit: Callable[[], None]  # persist settings to disk
 
 
 @dataclass(frozen=True)
 class ServicesContext:
     """Stateless effects: i18n, notifications, transient status bar messages."""
 
-    t: Callable[..., str]                   # t(key, **kwargs) -> str
-    notify: Callable[[str, str], None]      # respects notify_enabled toggle
-    set_status: Callable[[str], None]       # transient status bar message
+    t: Callable[..., str]  # t(key, **kwargs) -> str
+    notify: Callable[[str, str], None]  # respects notify_enabled toggle
+    set_status: Callable[[str], None]  # transient status bar message
 
 
 @dataclass(frozen=True)

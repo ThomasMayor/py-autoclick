@@ -44,10 +44,16 @@ class Tooltip:
         tw.wm_overrideredirect(True)
         tw.wm_geometry(f"+{x}+{y}")
         lbl = tk.Label(
-            tw, text=self.text, justify="left",
-            background=TOOLTIP_BG, foreground=TOOLTIP_FG,
-            relief="solid", borderwidth=1,
-            font=("", 9), padx=TOOLTIP_PADX, pady=TOOLTIP_PADY,
+            tw,
+            text=self.text,
+            justify="left",
+            background=TOOLTIP_BG,
+            foreground=TOOLTIP_FG,
+            relief="solid",
+            borderwidth=1,
+            font=("", 9),
+            padx=TOOLTIP_PADX,
+            pady=TOOLTIP_PADY,
         )
         lbl.pack()
 

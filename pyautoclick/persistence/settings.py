@@ -12,7 +12,7 @@ import logging
 import os
 import tempfile
 from dataclasses import asdict, dataclass, field, fields
-from typing import Any, Literal, get_args, get_origin
+from typing import Any, Literal, get_args
 
 from pyautoclick.core.buttons import ACTION_BUTTONS, TRIGGER_BUTTONS
 from pyautoclick.paths import CONFIG_DIR, CONFIG_FILE
@@ -57,7 +57,7 @@ class Settings:
     # --- divers ---
     notify_enabled: bool = True
     theme: ThemeName = "dark"
-    language: LanguageCode | None = None    # None = détecter au premier lancement
+    language: LanguageCode | None = None  # None = détecter au premier lancement
 
     # ------------------------------------------------------------------
     # Persistence
@@ -102,9 +102,7 @@ class Settings:
         """
         CONFIG_DIR.mkdir(parents=True, exist_ok=True)
         # NamedTemporaryFile in same dir to keep replace atomic on POSIX
-        fd, tmp_path = tempfile.mkstemp(
-            prefix=".config-", suffix=".tmp", dir=str(CONFIG_DIR)
-        )
+        fd, tmp_path = tempfile.mkstemp(prefix=".config-", suffix=".tmp", dir=str(CONFIG_DIR))
         try:
             with os.fdopen(fd, "w", encoding="utf-8") as f:
                 json.dump(asdict(self), f, indent=2, ensure_ascii=False)
@@ -147,7 +145,9 @@ def _assign_validated(s: Settings, name: str, raw: Any) -> None:
         default = getattr(Settings(), name)
         logger.warning(
             "invalid value for %r in config (%s); falling back to default %r",
-            name, exc, default,
+            name,
+            exc,
+            default,
         )
         return  # default already in place from cls() init
     setattr(s, name, value)
@@ -214,6 +214,7 @@ def _validate(name: str, raw: Any) -> Any:  # noqa: PLR0911 — exhaustive switc
 # Schema migrations
 # ----------------------------------------------------------------------
 
+
 def migrate_to_current(data: dict[str, Any], *, from_version: int) -> dict[str, Any]:
     """Apply schema migrations from ``from_version`` to ``CURRENT_CONFIG_VERSION``.
 
@@ -227,7 +228,8 @@ def migrate_to_current(data: dict[str, Any], *, from_version: int) -> dict[str, 
         if migration is None:
             logger.warning(
                 "no migration registered from v%d to v%d; relying on defaults",
-                version, version + 1,
+                version,
+                version + 1,
             )
             break
         logger.info("migrating config v%d -> v%d", version, version + 1)

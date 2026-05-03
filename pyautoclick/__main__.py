@@ -37,8 +37,7 @@ def _show_already_running_dialog() -> None:
         lang = "en"
     root = tk.Tk()
     root.withdraw()
-    messagebox.showwarning(t("app_title", lang),
-                           t("instance_already_running", lang))
+    messagebox.showwarning(t("app_title", lang), t("instance_already_running", lang))
     root.destroy()
 
 

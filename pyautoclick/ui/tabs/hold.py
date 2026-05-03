@@ -27,51 +27,71 @@ class HoldTab(BaseTab):
 
         # Enable
         self.hold_enabled_var = tk.BooleanVar(value=s.hold_enabled)
-        cbe = ttk.Checkbutton(self, text=t("hold_enable"),
-                              variable=self.hold_enabled_var,
-                              command=self._on_hold_toggle)
+        cbe = ttk.Checkbutton(
+            self,
+            text=t("hold_enable"),
+            variable=self.hold_enabled_var,
+            command=self._on_hold_toggle,
+        )
         cbe.grid(row=0, column=0, columnspan=2, sticky=SL, pady=(0, 12))
         Tooltip(cbe, t("hold_enable_tip"))
 
         # Trigger
         ttk.Label(self, text=t("label_trigger"), anchor=self.anchor_label).grid(
-            row=1, column=L, sticky=SL, pady=8,
+            row=1,
+            column=L,
+            sticky=SL,
+            pady=8,
         )
         trigger_labels = [t(f"trigger_{k}") for k in TRIGGER_KEYS]
         self.trigger_var = tk.StringVar(value=t(f"trigger_{s.trigger}"))
-        cb = ttk.Combobox(self, textvariable=self.trigger_var,
-                          values=trigger_labels, state="readonly")
+        cb = ttk.Combobox(
+            self, textvariable=self.trigger_var, values=trigger_labels, state="readonly"
+        )
         cb.grid(row=1, column=C, sticky="ew", pady=8)
         cb.bind("<<ComboboxSelected>>", self._on_trigger_change)
         Tooltip(cb, t("trigger_tip"))
 
         # Action
         ttk.Label(self, text=t("label_action"), anchor=self.anchor_label).grid(
-            row=2, column=L, sticky=SL, pady=8,
+            row=2,
+            column=L,
+            sticky=SL,
+            pady=8,
         )
         action_labels = [t(f"action_{k}") for k in ACTION_KEYS]
         self.action_var = tk.StringVar(value=t(f"action_{s.action}"))
-        cb2 = ttk.Combobox(self, textvariable=self.action_var,
-                           values=action_labels, state="readonly")
+        cb2 = ttk.Combobox(
+            self, textvariable=self.action_var, values=action_labels, state="readonly"
+        )
         cb2.grid(row=2, column=C, sticky="ew", pady=8)
         cb2.bind("<<ComboboxSelected>>", self._on_action_change)
         Tooltip(cb2, t("action_tip"))
 
         # CPS (slider 1-50 + spinbox 1-200)
         ttk.Label(self, text=t("label_cps"), anchor=self.anchor_label).grid(
-            row=3, column=L, sticky=SL, pady=8,
+            row=3,
+            column=L,
+            sticky=SL,
+            pady=8,
         )
         cps_frame = ttk.Frame(self)
         cps_frame.grid(row=3, column=C, sticky="ew", pady=8)
         self.cps_var = tk.IntVar(value=s.cps)
-        sp_cps = ttk.Spinbox(cps_frame, from_=1, to=200, width=5,
-                             textvariable=self.cps_var,
-                             command=self._on_cps_spin)
+        sp_cps = ttk.Spinbox(
+            cps_frame,
+            from_=1,
+            to=200,
+            width=5,
+            textvariable=self.cps_var,
+            command=self._on_cps_spin,
+        )
         sp_cps.pack(side=self.side("right"), padx=(6, 0))
         sp_cps.bind("<FocusOut>", lambda _e: self._on_cps_spin())
         sp_cps.bind("<Return>", lambda _e: self._on_cps_spin())
-        scale = ttk.Scale(cps_frame, from_=1, to=50, orient="horizontal",
-                          command=self._on_cps_scale)
+        scale = ttk.Scale(
+            cps_frame, from_=1, to=50, orient="horizontal", command=self._on_cps_scale
+        )
         scale.set(min(50, s.cps))
         scale.pack(side=self.side("left"), fill="x", expand=True)
         self._cps_scale = scale
@@ -79,12 +99,20 @@ class HoldTab(BaseTab):
 
         # Jitter
         ttk.Label(self, text=t("label_jitter"), anchor=self.anchor_label).grid(
-            row=4, column=L, sticky=SL, pady=8,
+            row=4,
+            column=L,
+            sticky=SL,
+            pady=8,
         )
         self.hold_jitter_var = tk.IntVar(value=s.hold_jitter_ms)
-        sp_j = ttk.Spinbox(self, from_=0, to=500, increment=5,
-                           textvariable=self.hold_jitter_var,
-                           command=self._on_hold_jitter)
+        sp_j = ttk.Spinbox(
+            self,
+            from_=0,
+            to=500,
+            increment=5,
+            textvariable=self.hold_jitter_var,
+            command=self._on_hold_jitter,
+        )
         sp_j.grid(row=4, column=C, sticky="ew", pady=8)
         sp_j.bind("<FocusOut>", lambda _e: self._on_hold_jitter())
         sp_j.bind("<Return>", lambda _e: self._on_hold_jitter())

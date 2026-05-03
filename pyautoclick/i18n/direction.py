@@ -26,9 +26,11 @@ def get_direction(lang: str) -> str:
         return _CACHE[lang]
     direction = "ltr"
     try:
-        text = resources.files("pyautoclick.i18n.locales").joinpath(
-            f"{lang}.json"
-        ).read_text(encoding="utf-8")
+        text = (
+            resources.files("pyautoclick.i18n.locales")
+            .joinpath(f"{lang}.json")
+            .read_text(encoding="utf-8")
+        )
         meta = json.loads(text).get("_meta", {})
         if isinstance(meta, dict) and meta.get("direction") == "rtl":
             direction = "rtl"

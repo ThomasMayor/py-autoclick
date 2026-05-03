@@ -9,10 +9,10 @@ from pyautoclick.i18n.core import (
 from pyautoclick.i18n.direction import get_direction, is_rtl
 
 __all__ = [
-    "t",
-    "detect_system_language",
     "LANGUAGES",
     "LANG_LABELS",
-    "is_rtl",
+    "detect_system_language",
     "get_direction",
+    "is_rtl",
+    "t",
 ]

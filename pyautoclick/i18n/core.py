@@ -48,6 +48,7 @@ _FALLBACK_LANG = "en"
 _TABLES: dict[str, dict[str, str]] | None = None
 _MISSING_KEYS_LOGGED: set[tuple[str, str]] = set()
 
+
 def _find_matching_brace(s: str, start: int) -> int:
     """Index of ``}`` matching the ``{`` at ``s[start]``. ``-1`` if unmatched."""
     depth = 0
@@ -85,7 +86,7 @@ def _parse_plural_block(inner: str, kwargs: dict[str, Any]) -> str | None:
         brace_close = _find_matching_brace(inner, brace_open)
         if brace_close == -1:
             return None
-        forms[name] = inner[brace_open + 1:brace_close]
+        forms[name] = inner[brace_open + 1 : brace_close]
         pos = brace_close + 1
 
     if "one" not in forms or "other" not in forms:
@@ -152,13 +153,13 @@ def _resolve_plural(template: str, kwargs: dict[str, Any]) -> str:
             out.append(ch)
             i += 1
             continue
-        inner = template[i + 1:end]
+        inner = template[i + 1 : end]
         replaced = _parse_plural_block(inner, kwargs)
         if replaced is not None:
             out.append(replaced)
         else:
             # Not a plural block — keep the original {...} for str.format
-            out.append(template[i:end + 1])
+            out.append(template[i : end + 1])
         i = end + 1
     return "".join(out)
 
@@ -174,8 +175,7 @@ def _lookup(key: str, lang: str) -> str:
         marker = (lang, key)
         if marker not in _MISSING_KEYS_LOGGED:
             _MISSING_KEYS_LOGGED.add(marker)
-            logger.warning("missing translation %r for lang %r — using EN fallback",
-                           key, lang)
+            logger.warning("missing translation %r for lang %r — using EN fallback", key, lang)
         return txt
     # Last resort: raw key, log once
     marker = ("__missing__", key)

@@ -11,9 +11,9 @@ WINDOW_GEOMETRY = "660x460"
 WINDOW_MIN_SIZE = (620, 400)
 
 # ---- Generic spacing ----
-TAB_PADDING = 20            # ttk.Frame padding inside each tab
-ROW_PADY = 8                # vertical spacing between form rows
-SECTION_PADY = 12           # extra vertical space before a new section
+TAB_PADDING = 20  # ttk.Frame padding inside each tab
+ROW_PADY = 8  # vertical spacing between form rows
+SECTION_PADY = 12  # extra vertical space before a new section
 SEPARATOR_PADY = 16
 NOTEBOOK_PADX = 14
 NOTEBOOK_PADY_TOP = 14
@@ -63,10 +63,10 @@ POSITIONS_LISTBOX_HEIGHT = 4
 POSITION_CAPTURE_DELAY_MS = 3000
 
 # ---- Rendering / refresh ----
-TICK_INTERVAL_MS = 100              # status bar + cursor refresh cadence
-TOPMOST_FLASH_MS = 150              # bring-to-front "topmost" pulse duration
+TICK_INTERVAL_MS = 100  # status bar + cursor refresh cadence
+TOPMOST_FLASH_MS = 150  # bring-to-front "topmost" pulse duration
 
 # ---- Misc ----
-THEME_DARK_GLYPH = "☀"              # shown in dark mode -> button toggles to light
-THEME_LIGHT_GLYPH = "☾"             # shown in light mode -> button toggles to dark
+THEME_DARK_GLYPH = "☀"  # shown in dark mode -> button toggles to light
+THEME_LIGHT_GLYPH = "☾"  # shown in light mode -> button toggles to dark
 HOTKEY_CLEAR_GLYPH = "✕"

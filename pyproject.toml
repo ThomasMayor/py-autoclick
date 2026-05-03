@@ -87,7 +87,14 @@ select = [
 ignore = [
     "PLR0913",     # too many args (AppContext, BaseTab)
     "PLR2004",     # magic numbers in UI sizes/colors
+    "PLR0912",     # too-many-branches in click loops (intentional)
     "E501",        # line length handled by formatter
+    "PLC0415",     # lazy imports (sv-ttk fallback, test subprocess helpers)
+    "PLW0603",     # global statements (singleton caches: i18n._TABLES, direction._CACHE)
+    "SIM105",      # try/except: pass — equivalent to contextlib.suppress, no clarity gain
+    "SIM115",      # open() without context manager — lock files kept open for process lifetime
+    "TC001",       # type-only first-party imports — moot with `from __future__ import annotations`
+    "TC003",       # type-only stdlib imports — idem
 ]
 
 [tool.ruff.lint.per-file-ignores]
