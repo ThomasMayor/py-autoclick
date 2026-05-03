@@ -1,0 +1,56 @@
+name: Publish to PyPI
+
+# Triggers a publish whenever a tag matching v*.*.* is pushed
+# (e.g. ``git tag v0.3.0 && git push --tags``).
+#
+# Setup once on the GitHub repo:
+# 1. Create a PyPI account at https://pypi.org
+# 2. Go to https://pypi.org/manage/account/publishing/ and add a
+#    *Trusted Publisher* for this repo:
+#       PyPI project name : pyautoclick
+#       Owner             : <your-github-username>
+#       Repository        : py-autoclick
+#       Workflow filename : publish.yml
+#       Environment       : pypi
+# 3. In the GitHub repo: Settings -> Environments -> New environment named
+#    "pypi" (no secrets needed thanks to OIDC trusted publishing).
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build-and-publish:
+    name: Build and publish to PyPI
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/pyautoclick
+    permissions:
+      id-token: write   # Required for PyPI OIDC trusted publishing
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build tooling
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install build
+
+      - name: Build wheel + sdist
+        run: python -m build
+
+      - name: Verify wheel contents
+        run: |
+          python -m zipfile -l dist/*.whl | grep -E "i18n/locales/.*\.json"
+          python -m zipfile -l dist/*.whl | grep "assets/py-autoclick.png"
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
