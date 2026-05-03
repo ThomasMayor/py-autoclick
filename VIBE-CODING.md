@@ -3,7 +3,8 @@
 This is the story of how I built `py-autoclick` — a small but deliberately
 over-engineered cross-platform autoclicker — almost entirely by
 conversational pair-programming with [Claude](https://claude.com), Anthropic's
-coding-assistant LLM, in a language I haven't seriously written in years.
+coding-assistant LLM, in a language I had never seriously written before
+this project.
 
 This is not a "look how easy it is" doc. It's the opposite: a careful, honest
 account of what worked, what failed, and — most importantly — *why this
@@ -42,8 +43,10 @@ practitioner and clinic agendas in any given month. Cumulatively it has
 processed close to twenty-four million appointments and stores records for
 some three and a half million end-users.
 
-**Python? I haven't seriously used it in years.** I can read it. I know enough
-to recognise idioms when I see them. I would not call myself fluent.
+**Python? I've never seriously practised it before this project.** I can
+read it — modern Python isn't far from any other typed object-oriented
+language a polyglot has crossed paths with — but I had never used it for
+a real project before. I would not call myself fluent.
 
 This biographical detail is the load-bearing assumption of this document.
 The vibe-coding experiment described below worked because I knew, at every
@@ -96,8 +99,9 @@ the LLM is a fast, opinionated, occasionally-wrong typist with strong
 domain breadth.
 
 I picked Python deliberately, for two reasons. First, I wanted a language I
-*don't* live in daily, to honestly stress-test how far the LLM could carry
-me when my own intuition for idioms was weak. Second, Python's ecosystem
+have *never* seriously written, to honestly stress-test how far an LLM could
+carry me when my own intuition for idioms was effectively zero. Second,
+Python's ecosystem
 (typing, pytest, ruff, mypy, packaging, GitHub Actions) is mature enough that
 "enterprise quality" is well-defined: types, tests, coverage gates, multi-OS
 CI, atomic persistence, structured logging.
@@ -406,7 +410,7 @@ ignores defeats the exercise.
   window-to-front on second launch"). Claude designed the POSIX vs
   Windows split — `fcntl + AF_UNIX` vs `msvcrt + TCP loopback` — including
   the rationale for each choice. I would not have produced that split as
-  fast on my own in a language I haven't lived in.
+  fast on my own in a language entirely new to me.
 
 - **Unblocking when I don't know the idiom.** "What's the Python
   equivalent of `X`?" — Claude answers in seconds, with the trade-offs I'd
