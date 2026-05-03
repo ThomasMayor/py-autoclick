@@ -15,18 +15,50 @@ silent fallback, broken cross-platform support, etc.).
 
 ### 1.1 Never commit when local tests are not 100% green
 
-Before any `git commit`, you MUST run the full suite **on the same machine**
-and **observe** the green output:
+Before any `git commit`, you MUST run the full suite **in every environment
+combination CI will run**, and observe each run green. The mistake to never
+make again: testing in only one mode locally and assuming the others "are
+the same".
+
+Mandatory commands (in order):
 
 ```bash
-DISPLAY= python3 -m pytest tests/ --no-cov -q
+# (a) Headless mode — real pynput unavailable, conftest fakes it
+DISPLAY= python3 -m pytest tests/ -q
+
+# (b) Display mode — real pynput available; conftest still forces the fake
+#     for determinism, BUT we also verify the imports don't crash with a
+#     real backend loaded
+python3 -m pytest tests/ -q
+
+# (c) Optional integration mode — opt-in to the real pynput
+PYAUTOCLICK_TESTS_REAL_PYNPUT=1 python3 -m pytest tests/ -q -k "smoke"
 ```
 
-The `DISPLAY=` prefix simulates the headless CI environment. If a test
-requires a display to pass, the test is wrong, not the environment. Fix the
-test or the production code, then re-run. **No exceptions.**
+If `(a)` and `(b)` are not BOTH green, do not push. **No exceptions.**
 
 Pushing red CI for the team to see is a CAC 40-grade quality offense.
+
+### 1.1.1 The "DISPLAY trap" — why this rule exists
+
+Pynput's behavior changes drastically based on what's loaded at import time:
+
+| Local DISPLAY | What loads | What `HotKey.parse("a")` returns |
+|---|---|---|
+| unset (`DISPLAY=`) | **Fake** pynput (conftest fallback) | `["a"]` (string list) |
+| set (`DISPLAY=:0`) | **Real** pynput xorg backend | `frozenset({KeyCode("a")})` |
+| CI under `xvfb-run` | **Real** pynput xorg backend | `frozenset({KeyCode("a")})` |
+
+A test that pushes string keys (`hm._on_press("a")`) and asserts the
+callback fires will work with the **fake** but silently fail with the
+**real** pynput, because `frozenset({KeyCode("a")}).issubset({"a"})` is
+`False` (different hash).
+
+Our defense: `tests/conftest.py` **always** installs the fake (unless
+`PYAUTOCLICK_TESTS_REAL_PYNPUT=1`). This guarantees test determinism. But
+it also means a developer must verify with the real pynput at least once
+(mode `b` above) to catch incompatibilities — typically import-time crashes
+on platforms without input devices.
 
 ### 1.2 Never import `pynput` at module load time outside `core/clicker.py` and `ui/`
 
@@ -712,7 +744,10 @@ Run **all of these** locally before any push:
 
 - [ ] `ruff check pyautoclick tests` → no errors
 - [ ] `ruff format --check pyautoclick tests` → no diff
-- [ ] `DISPLAY= python3 -m pytest tests/ --no-cov -q` → all green
+- [ ] `mypy pyautoclick` → `Success: no issues found`
+- [ ] **`DISPLAY= python3 -m pytest tests/ -q`** → all green (headless mode)
+- [ ] **`python3 -m pytest tests/ -q`** → all green (display mode — catches
+  fake/real divergence, see §1.1)
 - [ ] `find pyautoclick -name '*.py' -exec python3 -m py_compile {} +` → no SyntaxError
 - [ ] `CHANGELOG.md` updated under `## [Unreleased]` if user-visible change
 - [ ] If a new translation key was added, all 11 locales contain it
@@ -889,6 +924,37 @@ that take the lock.
 **Prevention**: any new field on `AutoClicker` that might be read by a
 loop while written by the UI thread must follow the snapshot+lock
 pattern.
+
+### Pitfall #13 — Mock divergence: tests pass with the fake but fail with the real dependency
+
+**Symptom**: 226 tests pass locally with `DISPLAY=` (fake pynput injected
+by conftest fallback), then 12 fail on CI under `xvfb-run` where the real
+pynput loads.
+
+**Cause**: the fake's `HotKey.parse("a")` returned `["a"]` (string list)
+while the real one returns `frozenset({KeyCode("a")})` (objects with
+different hash). Tests pushing `hm._on_press("a")` worked with the fake
+because `"a" in {"a"}` is `True`, but with the real backend
+`KeyCode("a") != "a"` so the combo never matched and callbacks never
+fired. Local runs and CI **disagreed silently** because each loaded a
+different backend.
+
+**Fix**: `tests/conftest.py` now **always** installs the fake (unless
+`PYAUTOCLICK_TESTS_REAL_PYNPUT=1`). Tests are deterministic regardless of
+the local DISPLAY state.
+
+**Prevention** — the rule that prevents future occurrences:
+
+1. The pre-commit checklist (§5) MUST run pytest in **both** display modes
+   (with and without DISPLAY set), as documented in §1.1. A passing run
+   in only one mode is a false-green.
+2. When a test uses a manually-built input (here: a string key), prefer
+   building it via the same code path the production uses (here:
+   `keyboard.HotKey.parse(combo)`) — that way mock and real diverge less.
+3. When you write a fake for a third-party library, add a comment
+   documenting EXACTLY which observable behaviors of the real library it
+   does and does not emulate. The fake in `tests/conftest.py` now lists
+   its limitations explicitly.
 
 ---
 

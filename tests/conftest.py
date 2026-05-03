@@ -21,6 +21,7 @@ tests run against the real classes — no fakery.
 from __future__ import annotations
 
 import json
+import os
 import sys
 from collections.abc import Iterator
 from pathlib import Path
@@ -133,13 +134,20 @@ def _install_fake_pynput() -> None:
     sys.modules["pynput.keyboard"] = fake_keyboard
 
 
-# Try the real pynput first. If it fails (no DISPLAY, missing native lib),
-# fall back to the fake so tests can still import core/clicker, core/hotkeys.
-if "pynput" not in sys.modules:
-    try:
-        import pynput  # noqa: F401
-    except ImportError:
-        _install_fake_pynput()
+# ALWAYS inject the fake pynput, regardless of whether the real one is
+# installable. Rationale (learned the hard way — see CLAUDE.md §6 pitfall #13):
+# - The real ``HotKey.parse("a")`` returns ``frozenset({KeyCode('a')})``,
+#   not ``frozenset({"a"})``. Tests that push string keys via ``_on_press("a")``
+#   produce hash mismatches and never fire callbacks under the real backend.
+# - The real ``mouse.Listener.start()`` may abort on platforms without input
+#   devices (CI runners on Windows / macOS without Accessibility) → SIGABRT.
+# - We test PyAutoClick's logic, not pynput's. The real pynput is exercised
+#   manually when the app actually runs.
+#
+# To keep an escape hatch, ``PYAUTOCLICK_TESTS_REAL_PYNPUT=1`` opts out of
+# the fake injection for explicit integration runs.
+if not os.environ.get("PYAUTOCLICK_TESTS_REAL_PYNPUT"):
+    _install_fake_pynput()
 
 
 # ---------------------------------------------------------------------------
