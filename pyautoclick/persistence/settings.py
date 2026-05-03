@@ -16,13 +16,13 @@ from typing import Any, Literal, get_args
 
 from pyautoclick.core.buttons import ACTION_BUTTONS, TRIGGER_BUTTONS
 from pyautoclick.paths import CONFIG_DIR, CONFIG_FILE
-from pyautoclick.persistence.migrations import migrate_legacy
+from pyautoclick.persistence.migrations import migrate_legacy, migrate_legacy_data
 
 logger = logging.getLogger(__name__)
 
 CURRENT_CONFIG_VERSION = 1
 
-LanguageCode = Literal["en", "fr"]
+LanguageCode = Literal["en", "fr", "es", "pt", "de", "it", "ru", "zh", "ja", "ar", "he"]
 ThemeName = Literal["dark", "light"]
 
 Position = tuple[int, int]
@@ -85,12 +85,18 @@ class Settings:
         version = data.get("config_version", 0)
         data = migrate_to_current(data, from_version=version)
 
+        # Normalize legacy values (FR labels -> stable keys) BEFORE validation,
+        # otherwise the validators reject them as unknown and the user's choice
+        # is lost.
+        migrate_legacy_data(data)
+
         s = cls()
         for f_def in fields(cls):
             if f_def.name in data:
                 _assign_validated(s, f_def.name, data[f_def.name])
 
-        # Run legacy value-level migration (FR labels -> stable keys)
+        # Defensive second pass on the typed instance (catches anything that
+        # slipped through, e.g. partial state set by buggy upgrade paths).
         migrate_legacy(s)
         return s
 

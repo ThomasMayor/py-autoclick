@@ -92,14 +92,14 @@ def test_settings_default_load(tmp_config_dir) -> None:
 
 
 def test_jittered_zero_is_identity() -> None:
-    from pyautoclick.core.clicker import jittered
+    from pyautoclick.core.timing import jittered
 
     assert jittered(100, 0) == 100
     assert jittered(0, 0) == 0
 
 
 def test_jittered_clamps_to_zero() -> None:
-    from pyautoclick.core.clicker import jittered
+    from pyautoclick.core.timing import jittered
 
     # Whatever the random output, never negative
     for _ in range(100):

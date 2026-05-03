@@ -98,7 +98,12 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/*" = ["PLR2004", "S101"]
+"tests/*" = [
+    "PLR2004",   # magic numbers in test data
+    "S101",      # asserts are the whole point of tests
+    "SIM117",    # nested `with patch(...)` reads better than combined
+    "RUF001",    # unicode chars in test data (NBSP, RTL marks etc.) are intentional
+]
 "pyautoclick/i18n/locales/*" = ["E501"]  # translation strings
 
 # ---- Mypy ----

@@ -18,20 +18,15 @@ events to give them a chance to exit cleanly first.
 from __future__ import annotations
 
 import logging
-import random
 import threading
 import time
 
 from pynput import mouse
 from pynput.mouse import Button, Controller
 
+from pyautoclick.core.timing import jittered
+
 logger = logging.getLogger(__name__)
-
-
-def jittered(value_ms: float, jitter_ms: float) -> float:
-    if jitter_ms <= 0:
-        return max(0, value_ms)
-    return max(0, value_ms + random.uniform(-jitter_ms, jitter_ms))
 
 
 class AutoClicker:

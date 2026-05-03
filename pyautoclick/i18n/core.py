@@ -206,7 +206,10 @@ def t(key: str, lang: str, **kwargs: Any) -> str:
     if expanded:
         try:
             return template.format(**expanded)
-        except (KeyError, IndexError):
+        except (KeyError, IndexError, ValueError):
+            # ValueError happens when the template still contains an unresolved
+            # plural block like ``{n, plural, ...}`` — str.format chokes on the
+            # comma. We accept the partially-rendered template rather than crash.
             return template
     return template
 
