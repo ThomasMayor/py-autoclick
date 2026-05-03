@@ -28,7 +28,7 @@ _FORM_RE = re.compile(r"\b(one|other)\s*\{")
 
 logger = logging.getLogger(__name__)
 
-LANGUAGES = ["en", "fr", "es", "pt", "de", "it", "ru", "zh", "ja", "ar"]
+LANGUAGES = ["en", "fr", "es", "pt", "de", "it", "ru", "zh", "ja", "ar", "he"]
 LANG_LABELS = {
     "en": "English",
     "fr": "Français",
@@ -40,6 +40,7 @@ LANG_LABELS = {
     "zh": "中文",
     "ja": "日本語",
     "ar": "العربية",
+    "he": "עברית",
 }
 _FALLBACK_LANG = "en"
 
