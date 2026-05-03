@@ -60,6 +60,7 @@ packages = ["pyautoclick"]
 "pyautoclick/i18n/locales/zh.json" = "pyautoclick/i18n/locales/zh.json"
 "pyautoclick/i18n/locales/ja.json" = "pyautoclick/i18n/locales/ja.json"
 "pyautoclick/i18n/locales/ar.json" = "pyautoclick/i18n/locales/ar.json"
+"pyautoclick/i18n/locales/he.json" = "pyautoclick/i18n/locales/he.json"
 "pyautoclick/assets/py-autoclick.png" = "pyautoclick/assets/py-autoclick.png"
 
 [tool.hatch.build.targets.wheel.shared-data]
