@@ -7,7 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.2] — 2026-05-03
+
+First version actually published to PyPI after the 0.3.1 commit (0.3.1
+was committed to main but never tagged).
+
+### Changed
+- **CI: `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true`** at workflow level —
+  forces every action including transitive dependencies (e.g.
+  `actions/github-script` pulled in by `codecov-action`) to run under
+  Node 24. Catches Node-20 deprecation leaks even when our top-level
+  action pins are correct.
+- **CI: pip cache disabled on macOS** — the cache action's
+  deserialization fails sporadically on macOS runners and triggers a
+  failure-level annotation even when the job itself succeeds. Linux and
+  Windows still benefit from the cache.
+
 ## [0.3.1] — 2026-05-03
+
+> Committed to main but never tagged / published to PyPI. Content shipped
+> via 0.3.2.
 
 ### Added
 - **Settings tab** — new dedicated tab grouping app-wide preferences
@@ -15,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   preferences are added.
 - New translation key `tab_settings` in all 11 locales.
 - Fixed: `pyautoclick.__version__` was stuck at `0.2.0` while the package
-  metadata read `0.3.0`; both now read `0.3.1` consistently.
+  metadata read `0.3.0`; both now read consistently.
 
 ### Changed
 - **Shortcuts tab** is now focused on its single responsibility: the three

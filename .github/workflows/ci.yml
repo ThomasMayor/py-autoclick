@@ -6,6 +6,14 @@ on:
   pull_request:
     branches: [main]
 
+# Force every JavaScript action (including transitive ones — e.g.
+# actions/github-script that codecov-action depends on internally) to run
+# under Node 24. Without this opt-in, deprecation annotations leak from
+# any sub-action that hasn't been re-pinned yet. Mandatory after 2026-06-02,
+# we set it now to surface incompatibilities early.
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 # Action versions are pinned to majors that ship Node 24 binaries — Node 20
 # is being removed from GitHub runners on 2026-09-16. See:
 # https://github.blog/changelog/2024-...-actions-deprecating-node20
@@ -24,11 +32,22 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Set up Python
+      # Pip cache deserialization is flaky on macOS runners (the resulting
+      # warning is raised at failure level by GitHub annotations even when
+      # the job itself succeeds). Disable cache on macOS only — Linux and
+      # Windows still benefit from it.
+      - name: Set up Python (cached)
+        if: runner.os != 'macOS'
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
+
+      - name: Set up Python (uncached, macOS)
+        if: runner.os == 'macOS'
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
 
       - name: Install package + dev deps
         run: |
