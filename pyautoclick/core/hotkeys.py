@@ -18,10 +18,10 @@ class HotkeyManager:
     ``"momentary"`` (callbacks at full-press and full-release).
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.listener: keyboard.Listener | None = None
         self.bindings: list[dict] = []
-        self.pressed: set = set()
+        self.pressed: set[object] = set()
         self._lock = threading.Lock()
 
     def configure(self, specs: list[dict]) -> list[str]:
@@ -68,7 +68,7 @@ class HotkeyManager:
                 logger.exception("error stopping keyboard listener")
             self.listener = None
 
-    def _canonical(self, key):
+    def _canonical(self, key: object) -> object:
         if self.listener is not None:
             try:
                 return self.listener.canonical(key)
@@ -76,7 +76,7 @@ class HotkeyManager:
                 return key
         return key
 
-    def _on_press(self, key):
+    def _on_press(self, key: object) -> None:
         ck = self._canonical(key)
         with self._lock:
             self.pressed.add(ck)
@@ -90,7 +90,7 @@ class HotkeyManager:
                         except Exception:  # never let user callback kill the listener
                             logger.exception("hotkey on_press callback raised")
 
-    def _on_release(self, key):
+    def _on_release(self, key: object) -> None:
         ck = self._canonical(key)
         with self._lock:
             self.pressed.discard(ck)

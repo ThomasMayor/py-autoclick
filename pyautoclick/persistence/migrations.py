@@ -7,7 +7,12 @@ agnostic keys (``"button8"``). Migration is best-effort and silent.
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from pyautoclick.core.buttons import ACTION_BUTTONS, TRIGGER_BUTTONS
+
+if TYPE_CHECKING:
+    from pyautoclick.persistence.settings import Settings
 
 LEGACY_TRIGGER_MAP = {
     "Bouton latéral arrière (8)": "button8",
@@ -29,13 +34,12 @@ def _safe_lookup(value: object, table: dict[str, str]) -> str | None:
     Guards against malicious/malformed configs containing unhashable types
     (lists, dicts) which would otherwise raise ``TypeError`` in ``in``.
     """
-    try:
-        return table.get(value)  # type: ignore[arg-type]
-    except TypeError:
+    if not isinstance(value, str):
         return None
+    return table.get(value)
 
 
-def migrate_legacy_data(data: dict) -> None:
+def migrate_legacy_data(data: dict[str, object]) -> None:
     """Mutate ``data`` (the raw on-disk dict) in place to upgrade legacy values.
 
     Must run **before** field-level validation so that legacy strings like
@@ -51,7 +55,7 @@ def migrate_legacy_data(data: dict) -> None:
             data[attr] = new_value
 
 
-def migrate_legacy(settings) -> None:
+def migrate_legacy(settings: Settings) -> None:
     """Mutate ``settings`` in place to upgrade legacy values (post-validation pass).
 
     Kept for backward compatibility with callers that already hold a Settings
@@ -69,6 +73,3 @@ def migrate_legacy(settings) -> None:
             setattr(settings, attr, LEGACY_ACTION_MAP[v])
         if getattr(settings, attr) not in ACTION_BUTTONS:
             setattr(settings, attr, "left")
-
-    if not isinstance(settings.auto_positions, list):
-        settings.auto_positions = []

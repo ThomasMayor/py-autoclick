@@ -22,7 +22,6 @@ from pyautoclick.paths import CONFIG_DIR, LOCK_FILE, SOCKET_FILE
 
 logger = logging.getLogger(__name__)
 
-_IS_WINDOWS = sys.platform == "win32"
 _PORT_FILE = CONFIG_DIR / "app.port"  # Windows-only: holds the loopback port
 
 
@@ -30,7 +29,11 @@ _PORT_FILE = CONFIG_DIR / "app.port"  # Windows-only: holds the loopback port
 # Lock
 # ----------------------------------------------------------------------
 
-if _IS_WINDOWS:
+# Note: ``sys.platform == "win32"`` is the canonical platform-narrowing
+# expression. mypy on Linux treats the Windows branch as unreachable and
+# skips type-checking its body — so we never need ``# type: ignore`` for
+# Windows-only attributes like ``msvcrt.locking``.
+if sys.platform == "win32":
     import msvcrt
 
     def acquire_single_instance_lock() -> IO[str] | None:
@@ -67,7 +70,7 @@ def _make_server_socket() -> tuple[socket.socket, str | int]:
     On POSIX, identifier is the path to the Unix socket.
     On Windows, identifier is the loopback port number.
     """
-    if _IS_WINDOWS:
+    if sys.platform == "win32":
         srv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         srv.bind(("127.0.0.1", 0))  # OS picks a free port
         port = srv.getsockname()[1]
@@ -85,7 +88,7 @@ def _make_server_socket() -> tuple[socket.socket, str | int]:
 
 def _connect_to_existing(timeout: float = 1.0) -> socket.socket | None:
     """Open a client socket to the running instance, or return None."""
-    if _IS_WINDOWS:
+    if sys.platform == "win32":
         try:
             port = int(_PORT_FILE.read_text())
         except (FileNotFoundError, OSError, ValueError):
@@ -161,7 +164,7 @@ def start_focus_server(on_focus_request: Callable[[], None]) -> socket.socket | 
 
 def cleanup_socket() -> None:
     """Remove the on-disk artefacts left by the IPC server."""
-    if _IS_WINDOWS:
+    if sys.platform == "win32":
         try:
             _PORT_FILE.unlink()
         except (FileNotFoundError, OSError):

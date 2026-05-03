@@ -35,7 +35,11 @@ class PlatformCapabilities:
 
 def detect() -> PlatformCapabilities:
     """Inspect environment variables and ``sys.platform`` to guess capabilities."""
-    if sys.platform == "win32":
+    # Widen sys.platform from its Literal type to a plain str so mypy does
+    # not consider the FreeBSD/AIX/Cygwin fallback at the bottom unreachable.
+    platform: str = sys.platform
+
+    if platform == "win32":
         return PlatformCapabilities(
             os_name="windows",
             display_server="windows",
@@ -44,7 +48,7 @@ def detect() -> PlatformCapabilities:
             caveats=[],
         )
 
-    if sys.platform == "darwin":
+    if platform == "darwin":
         return PlatformCapabilities(
             os_name="macos",
             display_server="macos",
@@ -55,7 +59,7 @@ def detect() -> PlatformCapabilities:
             ],
         )
 
-    if sys.platform.startswith("linux"):
+    if platform.startswith("linux"):
         session = (os.environ.get("XDG_SESSION_TYPE") or "").lower()
         wayland_display = os.environ.get("WAYLAND_DISPLAY")
         if session == "wayland" or (not session and wayland_display):
@@ -88,8 +92,9 @@ def detect() -> PlatformCapabilities:
             caveats=["unknown_display_server"],
         )
 
+    # Defensive fallback for exotic platforms (FreeBSD, AIX, Cygwin, etc.).
     return PlatformCapabilities(
-        os_name=sys.platform,
+        os_name=platform,
         display_server="unknown",
         has_global_hotkeys=False,
         has_global_mouse_events=False,

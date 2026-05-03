@@ -20,6 +20,7 @@ from __future__ import annotations
 import logging
 import threading
 import time
+from collections.abc import Callable
 
 from pynput import mouse
 from pynput.mouse import Button, Controller
@@ -28,11 +29,18 @@ from pyautoclick.core.timing import jittered
 
 logger = logging.getLogger(__name__)
 
+OnButtonSeen = Callable[[int, int, "Button", bool], None]
+OnAutoStopped = Callable[..., None]  # accepts ``reason="..."`` kwarg
+
 
 class AutoClicker:
     """Two background loops: hold (gated by mouse trigger) and auto (free-running)."""
 
-    def __init__(self, on_button_seen=None, on_auto_stopped=None):
+    def __init__(
+        self,
+        on_button_seen: OnButtonSeen | None = None,
+        on_auto_stopped: OnAutoStopped | None = None,
+    ) -> None:
         self.controller = Controller()
         self.lock = threading.RLock()  # all mutable state below
 
@@ -171,7 +179,7 @@ class AutoClicker:
     # Mouse listener
     # ------------------------------------------------------------------
 
-    def _on_click(self, x, y, button, pressed):
+    def _on_click(self, x: int, y: int, button: Button, pressed: bool) -> None:
         if self.on_button_seen:
             try:
                 self.on_button_seen(x, y, button, pressed)

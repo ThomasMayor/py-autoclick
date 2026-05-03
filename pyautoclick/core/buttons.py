@@ -22,6 +22,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
+    from collections.abc import Iterator
+
     from pynput.mouse import Button
 
 TRIGGER_KEYS = ["button8", "button9", "middle", "right"]
@@ -48,7 +50,7 @@ class _ButtonMap:
     def __contains__(self, key: object) -> bool:
         return key in self._keys
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[str]:
         return iter(self._keys)
 
     def keys(self) -> tuple[str, ...]:

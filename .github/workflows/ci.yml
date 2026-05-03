@@ -10,6 +10,7 @@ jobs:
   test:
     name: Test on ${{ matrix.os }} / Python ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 10           # hard cap to prevent runner zombies
     strategy:
       fail-fast: false
       matrix:
@@ -42,9 +43,18 @@ jobs:
         if: runner.os == 'Linux'
         run: xvfb-run --auto-servernum pytest -v
 
+      - name: Upload coverage to Codecov
+        if: runner.os == 'Linux' && matrix.python-version == '3.12'
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./coverage.xml
+          fail_ci_if_error: false   # Codecov outage should not red the build
+        continue-on-error: true     # tolerate missing CODECOV_TOKEN on first runs
+
   lint:
     name: Lint (ruff + mypy)
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -62,6 +72,5 @@ jobs:
           ruff check pyautoclick tests
           ruff format --check pyautoclick tests
 
-      - name: Mypy
+      - name: Mypy (strict, blocking)
         run: mypy pyautoclick
-        continue-on-error: true   # mypy strict on a fresh codebase will surface issues; soft fail until cleaned

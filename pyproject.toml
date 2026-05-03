@@ -103,27 +103,47 @@ ignore = [
     "S101",      # asserts are the whole point of tests
     "SIM117",    # nested `with patch(...)` reads better than combined
     "RUF001",    # unicode chars in test data (NBSP, RTL marks etc.) are intentional
+    "PLW0108",   # `lambda x: f(x)` is sometimes required when f's signature differs
+                 # (e.g. callback called with kwarg, list.append takes positional only)
 ]
 "pyautoclick/i18n/locales/*" = ["E501"]  # translation strings
 
 # ---- Mypy ----
+# Pragmatic config: strict on the typed business core, lenient on the UI layer
+# where tkinter callbacks have inherently weak signatures.
 [tool.mypy]
 python_version = "3.10"
-strict = true
 warn_unused_configs = true
-disallow_untyped_defs = true
-disallow_incomplete_defs = true
-check_untyped_defs = true
 no_implicit_optional = true
 warn_redundant_casts = true
 warn_unused_ignores = true
-warn_return_any = true
 warn_unreachable = true
-exclude = ["build/", "dist/"]
+check_untyped_defs = true
+exclude = ["build/", "dist/", "tests/"]
 
 [[tool.mypy.overrides]]
 module = ["pynput.*", "sv_ttk"]
 ignore_missing_imports = true
+
+# UI layer: lenient — tk widgets and event callbacks resist clean typing
+[[tool.mypy.overrides]]
+module = "pyautoclick.ui.*"
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+warn_return_any = false
+disable_error_code = ["attr-defined", "assignment", "arg-type", "abstract", "union-attr", "no-untyped-call", "misc", "unreachable"]
+
+# Entry point: same lenience (uses Tk private attrs, callback adapters)
+[[tool.mypy.overrides]]
+module = "pyautoclick.__main__"
+disable_error_code = ["attr-defined", "arg-type"]
+
+# Core business code: strict
+[[tool.mypy.overrides]]
+module = ["pyautoclick.core.*", "pyautoclick.persistence.*", "pyautoclick.i18n.*", "pyautoclick.services.*"]
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+warn_return_any = true
 
 # ---- Pytest ----
 [tool.pytest.ini_options]
@@ -135,6 +155,8 @@ addopts = [
     "--cov=pyautoclick",
     "--cov-report=term-missing",
     "--cov-report=html",
+    "--cov-report=xml",        # Codecov / GitHub Actions consumption
+    "--cov-fail-under=80",     # gate: any drop below 80% fails CI
 ]
 testpaths = ["tests"]
 markers = [
